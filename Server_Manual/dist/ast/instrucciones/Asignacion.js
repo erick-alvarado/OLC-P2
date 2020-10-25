@@ -53,6 +53,10 @@ class Asignacion extends Instruccion_1.Instruccion {
             g.contador++;
             inst.generarGrafo(g, nombreHijo);
         }
+        nombreHijo = "nodo" + g.contador;
+        g.grafo += "  " + nombreHijo + "[label=\";\"];\n";
+        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+        g.contador++;
         return null;
     }
     getNombreHijo() {

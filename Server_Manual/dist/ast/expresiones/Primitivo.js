@@ -14,7 +14,6 @@ class Primitivo extends Instruccion_1.Instruccion {
         this.valor = valor;
     }
     translate(tab) {
-        console.log(this.valor);
         return this.valor;
     }
     generarGrafo(g, padre) {

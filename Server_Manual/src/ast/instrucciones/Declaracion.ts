@@ -130,7 +130,6 @@ export class Declaracion extends Instruccion {
             g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
             g.contador++;
         }
-        return null;
 
 
     }

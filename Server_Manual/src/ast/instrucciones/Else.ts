@@ -46,9 +46,7 @@ export class Else extends Instruccion {
         }
     }
 
-    generarGrafo(g: ValorGrafo, padre: String) {
-        console.log(padre)
-        
+    generarGrafo(g: ValorGrafo, padre: String) {        
         let p= padre;
         //Condicion
         let nombreHijo = "nodo"+g.contador;

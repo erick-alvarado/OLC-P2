@@ -7,7 +7,11 @@ function AnalizarJava(entrada) {
     let codigo = `
 
     public class IdentificadorClase {
-        a('a',"b",'a');
+        boolean prueba = true;
+        while ( prueba ) {
+            prueba = false+true*4;
+        }
+        
     }
     `;
     let ast = Gramatica.parse(codigo);
@@ -22,7 +26,7 @@ function AnalizarJava(entrada) {
     console.log("\n\n------------------TRADUCCION----------------\n");
     console.log(ast.translate(0));
     console.log("------------------- GRAFO -------------------\n");
-    //console.log(txtDotAST);
+    console.log(txtDotAST);
     return "exito";
 }
 exports.AnalizarJava = AnalizarJava;

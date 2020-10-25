@@ -23,13 +23,13 @@ export class OperacionLogica extends Instruccion {
     translate(tab: number) {
         switch(this.tipoOperacion){
             case TypeOperation.AND:
-                return this.operador1.translate(0)+" && "+ this.operador2.translate(0);
+                return " && "+this.operador1.translate(0);
             case TypeOperation.OR:
-                return this.operador1.translate(0)+" || "+ this.operador2.translate(0);
+                return " || "+this.operador1.translate(0);
             case TypeOperation.NOT:
                 return "!"+ this.operador1.translate(0);
             case TypeOperation.XOR:
-                return this.operador1.translate(0)+" ^ "+ this.operador2.translate(0);
+                return " ^ "+this.operador1.translate(0);
             
         }
         return "";
@@ -38,23 +38,17 @@ export class OperacionLogica extends Instruccion {
         //Operador1
         if(this.operador1 != null){
             let nombreHijo = "nodo" + g.contador;
+            g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
+            g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+            g.contador++;
+
+            nombreHijo = "nodo" + g.contador;
             g.grafo += "  " + nombreHijo + "[label=\"" + this.operador1.getNombreHijo() + "\"];\n";
             g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
             g.contador++;
             this.operador1.generarGrafo(g, nombreHijo);
 
-            nombreHijo = "nodo" + g.contador;
-            g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
-            g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-            g.contador++;
-            if(this.operador2 != null){
-                //Operador2
-                nombreHijo = "nodo" + g.contador;
-                g.grafo += "  " + nombreHijo + "[label=\"" + this.operador2.getNombreHijo() + "\"];\n";
-                g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-                g.contador++;
-                this.operador2.generarGrafo(g, nombreHijo);
-            }
+            
         }    
     }
     getNombreHijo() {

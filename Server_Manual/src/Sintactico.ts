@@ -84,13 +84,12 @@ export class Sintactico{
     Bloque_Sentencias(): Array<Instruccion>{
 
         this.match(this.Tokens[this.n],'llaveAbre');
-
         if(this.Tokens[this.n].tipo=="llaveCierra"){
             this.match(this.Tokens[this.n],'llaveCierra');
             return []; 
         }
         let instrucciones : Array<Instruccion> = [];
-        while(this.Tokens[this.n]!=null){
+        while(this.n<=this.Tokens.length){
             switch(this.Tokens[this.n].tipo){
                 case 'identificador'://  INCRE_DECRE/ ASIGNACION   / LLAMADA
                     switch(this.Tokens[this.n+1].tipo){
@@ -111,11 +110,26 @@ export class Sintactico{
                             break;
                     }
                     break;
-                case 'numeric_'||'string_'||'boolean_'||'void_'||'double_'||'char_': //DECLARACION
+                case 'numeric_': //DECLARACION
+                    instrucciones.push(this.Declaracion());
+                    break;
+                case 'string_': //DECLARACION
+                    instrucciones.push(this.Declaracion());
+                    break;
+                case 'boolean_': //DECLARACION
+                    instrucciones.push(this.Declaracion());
+                    break;
+                case 'double_': //DECLARACION
+                    instrucciones.push(this.Declaracion());
+                    break;
+                case 'char_': //DECLARACION
+                    instrucciones.push(this.Declaracion());
                     break;
                 case 'public_': //FUNCION CLASE / FUNCION INTERFACE
+                    instrucciones.push(this.Funcion_Clase_Interface());
                     break;
                 case 'while_':
+                    instrucciones.push(this.While());
                     break;
                 case 'do_':
                     break;
@@ -141,6 +155,168 @@ export class Sintactico{
         
     }
 
+    Whil():Instruccion{
+        let i ;
+
+        return i;
+    }
+
+    While():Instruccion{
+        let i ;
+        this.match(this.Tokens[this.n],'while_'); 
+        this.match(this.Tokens[this.n],'parAbre'); 
+        let exp = this.Expresiones();
+        this.match(this.Tokens[this.n],'parCierra');
+        let bloque = this.Bloque_Sentencias();
+        i = new While(exp,bloque,0,0);
+        return i;
+    }
+
+    
+
+
+    Funcion_Clase_Interface(): Instruccion{
+        let i;
+        this.match(this.Tokens[this.n],'public_');
+        let tipo = this.Tipo();
+        this.match(this.Tokens[this.n],'identificador');
+        let id = this.Tokens[this.n-1].descripcion;
+        this.match(this.Tokens[this.n],'parAbre');
+        let params = this.Parametros();
+        this.match(this.Tokens[this.n],'parCierra');
+        if(this.Tokens[this.n].tipo=='pcoma'){
+            i = new Funcion_Interface(tipo,id,params,0,0);
+            this.match(this.Tokens[this.n],'pcoma');
+        }
+        else if (this.Tokens[this.n].tipo=='llaveAbre'){
+            i = new Funcion_Clase(tipo,id,params,this.Bloque_Sentencias(),0,0);
+        }
+        else{
+            i = new Primitivo("ERROR");
+            this.match(this.Tokens[this.n],'ERROR');
+        }
+        return i
+    }
+    Parametros(): Array <Instruccion>{
+        let i : Array<Instruccion> = [];
+        i.push(this.Parametro());
+        while(this.Tokens[this.n].tipo=='coma'){
+            this.match(this.Tokens[this.n],'coma');
+            i.push(this.Parametro());
+        }
+        return i;
+    }
+    Parametro(): Instruccion{
+        let i ;
+        let tipo = this.Tipo();
+        this.match(this.Tokens[this.n],'identificador');
+        i = new Parametro(tipo,this.Tokens[this.n-1].descripcion,0,0);
+        return i;
+    }
+    Declaracion(): Instruccion{
+        let i;
+        let tipo = this.Tipo();
+        this.match(this.Tokens[this.n],'identificador');
+        let id = this.Tokens[this.n-1].descripcion;
+
+        switch(this.Tokens[this.n].tipo){
+            case 'pcoma':
+                i = new Declaracion(tipo,this.Tokens[this.n-1].descripcion,null,null,0,0);
+                this.match(this.Tokens[this.n],'pcoma');
+                break;
+            case 'coma':
+                this.match(this.Tokens[this.n],'coma');
+                i = new Declaracion(tipo,id,null,this.Declara(),0,0);
+                this.match(this.Tokens[this.n],'pcoma');
+                break;
+            case 'igual':
+                this.match(this.Tokens[this.n],'igual');
+                let exp = this.Expresion();
+                if(this.Tokens[this.n].tipo=='pcoma'){
+                    i = new Declaracion(tipo,id,exp,null,0,0);
+                }
+                else if(this.Tokens[this.n].tipo=='coma'){
+                    this.match(this.Tokens[this.n],'coma');
+                    i = new Declaracion(tipo,id,exp,this.Declara(),0,0);
+                }
+                else{
+                    i = new Primitivo("ERROR");
+                    this.match(this.Tokens[this.n],'ERROR');
+                    return i;
+                }
+                this.match(this.Tokens[this.n],'pcoma');
+                break;
+        }
+        return i;
+    }
+    Declara(): Instruccion{
+        let i;
+        this.match(this.Tokens[this.n],'identificador');
+        let id = this.Tokens[this.n-1].descripcion;
+
+        switch(this.Tokens[this.n].tipo){
+            case 'pcoma':
+                i = new Declaracion(Type.COMA,this.Tokens[this.n-1].descripcion,null,null,0,0);
+                break;
+            case 'coma':
+                this.match(this.Tokens[this.n],'coma');
+                i = new Declaracion(Type.COMA,this.Tokens[this.n-1].descripcion,null,this.Declara(),0,0);
+                break;
+            case 'igual':
+                this.match(this.Tokens[this.n],'igual');
+                let exp = this.Expresion();
+                if(this.Tokens[this.n].tipo=='pcoma'){
+                    i = new Declaracion(Type.COMA,id,exp,null,0,0);
+                }
+                else if(this.Tokens[this.n].tipo=='coma'){
+                    this.match(this.Tokens[this.n],'coma');
+                    i = new Declaracion(Type.COMA,id,exp,this.Declara(),0,0);
+                }
+                else{
+                    i = new Primitivo("ERROR");
+                    this.match(this.Tokens[this.n],'ERROR');
+                    return i;
+                }
+                break;
+        }
+        return i;
+    }
+    Tipo(): Type{
+        let i;
+        switch(this.Tokens[this.n].tipo){
+            case 'numeric_':
+                this.match(this.Tokens[this.n],'numeric_');
+                i = Type.NUMERIC;
+                break;
+            case 'string_':
+                this.match(this.Tokens[this.n],'string_');
+                i = Type.STRING;
+                break;
+            case 'boolean_':
+                this.match(this.Tokens[this.n],'boolean_');
+                i = Type.BOOLEAN;
+                break;
+            case 'void_':
+                this.match(this.Tokens[this.n],'void_');
+                i = Type.VOID;
+                break;
+            case 'double_':
+                this.match(this.Tokens[this.n],'double_');
+                i = Type.DOUBLE;
+                break;
+            case 'char_':
+                this.match(this.Tokens[this.n],'char_');
+                i = Type.CHAR;
+                break;
+            default:
+                i = new Primitivo("ERROR");
+                this.match(this.Tokens[this.n],'ERROR');
+                return i;
+                break;
+            
+        }
+        return i;
+    }
     Asignacion(): Instruccion{
         this.match(this.Tokens[this.n],'identificador');
         this.match(this.Tokens[this.n],'igual');
@@ -180,7 +356,6 @@ export class Sintactico{
         }
         return i;
     }
-
     Primitivo(): Instruccion{
         let i;
         switch(this.Tokens[this.n].tipo){
@@ -215,6 +390,7 @@ export class Sintactico{
             default:
                 i = new Primitivo("ERROR");
                 this.match(this.Tokens[this.n],'ERROR');
+                return i;
                 break;
         }
         return i;
@@ -223,9 +399,11 @@ export class Sintactico{
         let i : Array<Instruccion> = [];
         i.push(this.Expresion());
         
-        while(this.Tokens[this.n].tipo !='pcoma'){
-            console.log(this.Tokens[this.n-1].tipo)
-            if(this.Tokens[this.n-1].tipo=='menos_menos'||this.Tokens[this.n-1].tipo=='mas_mas'||this.Tokens[this.n-1].tipo=='identificador'||this.Tokens[this.n-1].tipo == 'entero'){
+        while(this.Tokens[this.n].tipo !='pcoma' ){
+            if(this.Tokens[this.n].tipo =='parCierra'){
+                return i;
+            }
+            else if(this.Tokens[this.n-1].tipo=='menos_menos'||this.Tokens[this.n-1].tipo=='mas_mas'||this.Tokens[this.n-1].tipo=='identificador'||this.Tokens[this.n-1].tipo == 'entero'||this.Tokens[this.n-1].tipo == 'decimal'||this.Tokens[this.n-1].tipo == 'caracter'||this.Tokens[this.n-1].tipo == 'cadena'||this.Tokens[this.n-1].tipo == 'true_'||this.Tokens[this.n-1].tipo == 'false_'){
                 i.push(this.Expresion_Opera());
             }
             else{
@@ -331,12 +509,12 @@ export class Sintactico{
         }
         return i;
     }
-    
+
     match(token: Token,esperado: string ){
         if(token.tipo==esperado){
         }
         else{
-            this.lista_Error.push(new Error_("SINTACTICO",this.Tokens[this.n].fila,this.Tokens[this.n].columna,this.Tokens[this.n].descripcion));
+            this.lista_Error.push(new Error_("SINTACTICO",this.Tokens[this.n].fila,this.Tokens[this.n].columna,this.Tokens[this.n].descripcion+" se esperaba:"+esperado));
         }
         this.n++;
 

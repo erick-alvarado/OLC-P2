@@ -25,13 +25,13 @@ export class OperacionAritmetica extends Instruccion {
     translate(tab:number) {
         switch(this.tipoOperacion){
             case TypeOperation.SUMA:
-                return this.operador1.translate(0)+" + ";
+                return " + "+this.operador1.translate(0);
             case TypeOperation.RESTA:
-                return this.operador1.translate(0)+" - ";
+                return " - "+this.operador1.translate(0);
             case TypeOperation.MULTIPLICACION:
-                return this.operador1.translate(0)+" * ";
+                return " * "+this.operador1.translate(0);
             case TypeOperation.DIVISION:
-                return this.operador1.translate(0)+" / ";
+                return " / "+this.operador1.translate(0);
             
             case TypeOperation.MENOSUNARIO:
                 return "-"+this.operador1.translate(0);
@@ -44,16 +44,18 @@ export class OperacionAritmetica extends Instruccion {
     generarGrafo(g: ValorGrafo, padre: String) {
         //Operador1
         if(this.operador1 != null){
-            let nombreHijo = "nodo"+g.contador;
+            let nombreHijo = "nodo" + g.contador;
+                g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
+                g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+                g.contador++;
+            
+            nombreHijo = "nodo"+g.contador;
             g.grafo += "  "+nombreHijo +"[label=\""+this.operador1.getNombreHijo() + "\"];\n";
             g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
             g.contador++;
             this.operador1.generarGrafo(g,nombreHijo);
 
-            nombreHijo = "nodo" + g.contador;
-                g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
-                g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-                g.contador++;
+            
         }
     }
     getNombreHijo(): String {

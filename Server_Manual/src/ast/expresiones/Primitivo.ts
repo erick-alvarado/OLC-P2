@@ -15,7 +15,6 @@ export class Primitivo extends Instruccion {
     }
 
     translate(tab:number) {
-        console.log(this.valor)
         return this.valor;
     }
     generarGrafo(g: ValorGrafo, padre: String) {

@@ -113,7 +113,6 @@ class Declaracion extends Instruccion_1.Instruccion {
             g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
             g.contador++;
         }
-        return null;
     }
     getNombreHijo() {
         return "DECLARACION";

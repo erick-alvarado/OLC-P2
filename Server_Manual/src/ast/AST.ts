@@ -57,11 +57,9 @@ export class AST extends Instruccion {
         return cadena;
     }
     addError(pta : Error_){
-        console.log(pta);
         this.listaError.push(pta);
     }
     addToken(token :Token){
-        //console.log(token)
         this.listaToken.push(token);
     }
     setInstruccion(instrucciones: Array<Instruccion>){

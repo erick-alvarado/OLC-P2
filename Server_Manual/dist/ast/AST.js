@@ -48,11 +48,9 @@ class AST extends Instruccion_1.Instruccion {
         return cadena;
     }
     addError(pta) {
-        console.log(pta);
         this.listaError.push(pta);
     }
     addToken(token) {
-        //console.log(token)
         this.listaToken.push(token);
     }
     setInstruccion(instrucciones) {

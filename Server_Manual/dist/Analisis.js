@@ -8,7 +8,11 @@ const Sintactico_1 = require("./Sintactico");
 function AnalizarJava(entrada) {
     let codigo = `
     public class IdentificadorClase {
-        a=1+2*4/a-60;
+        boolean prueba = true;
+        while ( prueba ) {
+            prueba = false+true*4;
+        }
+        
     }
         `;
     let lexico = new Lexico_1.Lexico(codigo.toLowerCase());
@@ -21,7 +25,7 @@ function AnalizarJava(entrada) {
     console.log("\n\n---------------- ERRORES ----------------\n");
     console.log(ast.listaError);
     //console.log("\n\n---------------- TOKENS ----------------\n");
-    //console.log(ast.listaToken);
+    // console.log(ast.listaToken);
     console.log("\n\n------------------TRADUCCION----------------\n");
     console.log(ast.translate(0));
     console.log("------------------- GRAFO -------------------\n");

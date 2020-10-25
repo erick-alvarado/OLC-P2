@@ -43,7 +43,6 @@ class Else extends Instruccion_1.Instruccion {
         }
     }
     generarGrafo(g, padre) {
-        console.log(padre);
         let p = padre;
         //Condicion
         let nombreHijo = "nodo" + g.contador;

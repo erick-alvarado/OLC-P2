@@ -15,7 +15,6 @@ export class GrafoAST{
         
         g.grafo += "\n}";
         
-        //console.log(g.grafo);
         return g.grafo;
     }
 

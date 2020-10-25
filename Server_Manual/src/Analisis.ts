@@ -7,7 +7,11 @@ export function AnalizarJava(entrada:string):String{
     
     let codigo = `
     public class IdentificadorClase {
-        a=1+2*4/a-60;
+        boolean prueba = true;
+        while ( prueba ) {
+            prueba = false+true*4;
+        }
+        
     }
         `;
 
@@ -25,10 +29,11 @@ export function AnalizarJava(entrada:string):String{
     console.log(ast.listaError);
 
     //console.log("\n\n---------------- TOKENS ----------------\n");
-    //console.log(ast.listaToken);
+   // console.log(ast.listaToken);
 
     console.log("\n\n------------------TRADUCCION----------------\n")
     console.log(ast.translate(0));
+
 
     console.log("------------------- GRAFO -------------------\n");
     console.log(txtDotAST);
