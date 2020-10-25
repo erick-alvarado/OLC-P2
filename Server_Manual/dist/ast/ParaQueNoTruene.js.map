@@ -1,0 +1,1 @@
+{"version":3,"file":"ParaQueNoTruene.js","sourceRoot":"","sources":["../../src/ast/ParaQueNoTruene.ts"],"names":[],"mappings":";;;AAEA,MAAa,eAAe;IAIxB,YAAY,IAAY,EAAE,OAAe;QACrC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;IAC3B,CAAC;IACD,SAAS;QACL,OAAO,EAAE,CAAA;IACb,CAAC;IACD,YAAY,CAAC,CAAa,EAAE,KAAa;IACzC,CAAC;CACJ;AAbD,0CAaC"}
