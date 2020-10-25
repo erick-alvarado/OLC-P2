@@ -144,7 +144,7 @@ export class Sintactico{
     Asignacion(): Instruccion{
         this.match(this.Tokens[this.n],'identificador');
         this.match(this.Tokens[this.n],'igual');
-        let i = new Asignacion(this.Tokens[this.n-2].descripcion, this.Expresion(),0,0 );
+        let i = new Asignacion(this.Tokens[this.n-2].descripcion, this.Expresiones(),0,0 );
         this.match(this.Tokens[this.n],'pcoma');
         return i;
     }
@@ -219,6 +219,24 @@ export class Sintactico{
         }
         return i;
     }
+    Expresiones(): Array <Instruccion>{
+        let i : Array<Instruccion> = [];
+        i.push(this.Expresion());
+        
+        while(this.Tokens[this.n].tipo !='pcoma'){
+            console.log(this.Tokens[this.n-1].tipo)
+            if(this.Tokens[this.n-1].tipo=='menos_menos'||this.Tokens[this.n-1].tipo=='mas_mas'||this.Tokens[this.n-1].tipo=='identificador'||this.Tokens[this.n-1].tipo == 'entero'){
+                i.push(this.Expresion_Opera());
+            }
+            else{
+                i.push(this.Expresion());
+            }
+            if(this.n>=this.Tokens.length){
+                return i;
+            }
+        }
+        return i;
+    }
     Expresion(): Instruccion{
         let i ;
         switch(this.Tokens[this.n].tipo){
@@ -241,19 +259,15 @@ export class Sintactico{
                 break;
             case 'identificador':
                 if(this.Tokens[this.n+1].tipo=='mas_mas'||this.Tokens[this.n+1].tipo=='menos_menos'){
-                    this.Incremento_Decremento();
+                    i =this.Incremento_Decremento();
                 }
                 else{
                     this.match(this.Tokens[this.n],'identificador');
                     i = new Identificador(this.Tokens[this.n-1].descripcion);
                 }
-                if(this.Tokens[this.n].tipo!='pcoma'){
-                    this.Expresion_Opera();
-                }
                 break;
             default:
-                i = new OperacionRelacional("ERROR",null,null,0,0);
-                this.match(this.Tokens[this.n],'ERROR');
+                i = this.Primitivo();
                 break;
         
         }

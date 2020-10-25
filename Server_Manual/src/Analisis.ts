@@ -7,7 +7,7 @@ export function AnalizarJava(entrada:string):String{
     
     let codigo = `
     public class IdentificadorClase {
-        a('a',"b",4,4.5,true,false);
+        a=1+2*4/a-60;
     }
         `;
 
@@ -24,8 +24,8 @@ export function AnalizarJava(entrada:string):String{
     console.log("\n\n---------------- ERRORES ----------------\n");
     console.log(ast.listaError);
 
-    console.log("\n\n---------------- TOKENS ----------------\n");
-    console.log(ast.listaToken);
+    //console.log("\n\n---------------- TOKENS ----------------\n");
+    //console.log(ast.listaToken);
 
     console.log("\n\n------------------TRADUCCION----------------\n")
     console.log(ast.translate(0));

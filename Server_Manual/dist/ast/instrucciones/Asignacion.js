@@ -27,7 +27,13 @@ class Asignacion extends Instruccion_1.Instruccion {
     }
     translate(tab) {
         let tabu = this.tab(tab);
-        return tabu + "" + this.id + " = " + this.valor.translate(0) + ";\n";
+        let cadena = "";
+        if (this.valor.length > 0) {
+            for (const ins of this.valor) {
+                cadena += ins.translate(tab);
+            }
+        }
+        return tabu + "" + this.id + " = " + cadena + ";\n";
     }
     generarGrafo(g, padre) {
         //Identificador
@@ -39,15 +45,14 @@ class Asignacion extends Instruccion_1.Instruccion {
         g.grafo += "  " + nombreHijo + "[label=\"=\"];\n";
         g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
         g.contador++;
-        nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\"" + this.valor.getNombreHijo() + "\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
-        this.valor.generarGrafo(g, nombreHijo);
-        nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\";\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
+        for (let x = 0; x < this.valor.length; x++) {
+            let inst = this.valor[x];
+            nombreHijo = "nodo" + g.contador;
+            g.grafo += "  " + nombreHijo + "[label=\"" + inst.getNombreHijo() + "\"];\n";
+            g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+            g.contador++;
+            inst.generarGrafo(g, nombreHijo);
+        }
         return null;
     }
     getNombreHijo() {

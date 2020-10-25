@@ -41,22 +41,25 @@ class OperacionRelacional extends Instruccion_1.Instruccion {
     }
     generarGrafo(g, padre) {
         //Operador1
-        let nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\"" + this.operador1.getNombreHijo() + "\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
-        this.operador1.generarGrafo(g, nombreHijo);
-        nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
-        //Operador2
-        nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\"" + this.operador2.getNombreHijo() + "\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
-        this.operador2.generarGrafo(g, nombreHijo);
-        return null;
+        if (this.operador1 != null) {
+            let nombreHijo = "nodo" + g.contador;
+            g.grafo += "  " + nombreHijo + "[label=\"" + this.operador1.getNombreHijo() + "\"];\n";
+            g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+            g.contador++;
+            this.operador1.generarGrafo(g, nombreHijo);
+            nombreHijo = "nodo" + g.contador;
+            g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
+            g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+            g.contador++;
+            //Operador2
+            if (this.operador2 != null) {
+                nombreHijo = "nodo" + g.contador;
+                g.grafo += "  " + nombreHijo + "[label=\"" + this.operador2.getNombreHijo() + "\"];\n";
+                g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+                g.contador++;
+                this.operador2.generarGrafo(g, nombreHijo);
+            }
+        }
     }
     getNombreHijo() {
         switch (this.tipoOperacion) {
