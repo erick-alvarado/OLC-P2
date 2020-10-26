@@ -42,10 +42,6 @@ class OperacionAritmetica extends Instruccion_1.Instruccion {
         g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
         g.contador++;
         this.operador1.generarGrafo(g, nombreHijo);
-        nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
         if (this.operador2 != null) {
             //Operador2
             nombreHijo = "nodo" + g.contador;

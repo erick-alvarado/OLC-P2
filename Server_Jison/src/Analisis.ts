@@ -7,10 +7,7 @@ export function AnalizarJava(entrada:string):String{
     let codigo = `
 
     public class IdentificadorClase {
-        boolean prueba = true;
-        while ( prueba ) {
-            prueba = false+true*4;
-        }
+        prueba = false+true*4;
         
     }
     `;

@@ -51,10 +51,7 @@ export class OperacionRelacional extends Instruccion {
         g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
         g.contador++;
         this.operador1.generarGrafo(g,nombreHijo);
-        nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
+       
         //Operador2
         nombreHijo = "nodo"+g.contador;
         g.grafo += "  "+nombreHijo +"[label=\""+this.operador2.getNombreHijo() + "\"];\n";

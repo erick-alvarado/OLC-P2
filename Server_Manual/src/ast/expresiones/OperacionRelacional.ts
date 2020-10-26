@@ -47,12 +47,8 @@ export class OperacionRelacional extends Instruccion {
     generarGrafo(g: ValorGrafo, padre: String) {
         //Operador1
         if(this.operador1!=null){
-            let nombreHijo = "nodo" + g.contador;
-            g.grafo += "  " + nombreHijo + "[label=\" Tipo: " + this.tipoOperacion.toString() + "\"];\n";
-            g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-            g.contador++;
 
-            nombreHijo = "nodo"+g.contador;
+            let nombreHijo = "nodo"+g.contador;
             g.grafo += "  "+nombreHijo +"[label=\""+this.operador1.getNombreHijo() + "\"];\n";
             g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
             g.contador++;
