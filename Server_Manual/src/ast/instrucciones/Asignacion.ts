@@ -28,7 +28,7 @@ export class Asignacion extends Instruccion {
     }
     translate(tab:number) {
         let tabu = this.tab(tab);
-        return tabu+""+this.id + " = " + this.valor.translate(0) + ";\n";
+        return tabu+""+this.id + " = " + this.valor.translate(0) + "\n";
     }
     generarGrafo(g: ValorGrafo, padre: String) {
         

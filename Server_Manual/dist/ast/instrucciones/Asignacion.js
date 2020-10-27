@@ -27,7 +27,7 @@ class Asignacion extends Instruccion_1.Instruccion {
     }
     translate(tab) {
         let tabu = this.tab(tab);
-        return tabu + "" + this.id + " = " + this.valor.translate(0) + ";\n";
+        return tabu + "" + this.id + " = " + this.valor.translate(0) + "\n";
     }
     generarGrafo(g, padre) {
         //Identificador

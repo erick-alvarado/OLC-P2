@@ -7,28 +7,14 @@ function AnalizarJava(entrada) {
     let codigo = `
 
     public class IdentificadorClase {
-        if ( a > 5 ){
-            int a;
-            if ( a > 5 ){
-                int b;
-                // Bloque de sentencias then
-                } else if (a < 5){
-                    int c;
-                // Bloque de sentencias else if
-                }else{
-                    int d;
-                // Bloque de sentencias else
-                }
-            } else if (a < 5){
-                int f;
-            // Bloque de sentencias else if
-            }else{
-                int k;
-            // Bloque de sentencias else
-            }
-
-            
-    }
+        x++;
+        x--;
+        x= !a||b&&c^z;
+        int x=0, y, z=9;
+        boolean ft = true;
+        double c = 1.2;
+                
+        }
     `;
     let ast = Gramatica.parse(codigo);
     //Inicia la generacion del grafo

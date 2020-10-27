@@ -34,7 +34,7 @@ export class Llamada extends Instruccion {
             }
             cadena = cadena.substr(0,cadena.length -1);
         }
-        return tabu +""+this.id+"("+cadena+");\n"
+        return tabu +""+this.id+"("+cadena+")\n"
     }
 
     generarGrafo(g: ValorGrafo, padre: String) {

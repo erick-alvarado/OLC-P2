@@ -40,13 +40,13 @@ export class Expresion extends Instruccion {
             case TypeOperation.PARENTESIS:
                 return "("+this.operador1.translate(0)+")";
             case TypeOperation.AND:
-                return "&&"+this.operador1.translate(0)+ this.operador2.translate(0);
+                return " and "+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.OR:
-                return "||"+this.operador1.translate(0)+ this.operador2.translate(0);
+                return " or "+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.NOT:
-                return "!"+ this.operador1.translate(0);
+                return " not "+ this.operador1.translate(0);
             case TypeOperation.XOR:
-                return "^"+this.operador1.translate(0)+ this.operador2.translate(0);
+                return " xor "+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.SUMA:
                 return "+"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.RESTA:

@@ -16,8 +16,18 @@ class Main extends Instruccion_1.Instruccion {
         this.id = id;
         this.instrucciones = instrucciones;
     }
+    tab(tab) {
+        let n = 0;
+        let tabs = "";
+        while (tab > n) {
+            tabs += "\t";
+            n++;
+        }
+        return tabs;
+    }
     translate(tab) {
         tab = 1;
+        let tabu = this.tab(tab);
         let cadena = "\n";
         if (this.instrucciones != null) {
             for (const ins of this.instrucciones) {
@@ -25,7 +35,7 @@ class Main extends Instruccion_1.Instruccion {
             }
         }
         cadena += "\n";
-        return "function main ():" + cadena;
+        return "def main ():" + cadena + tabu + 'if __name__="__main__":\n' + tabu + "\t" + "main()\n";
     }
     generarGrafo(g, padre) {
         //----------- LISTA DE INSTRUCCIONES -----------

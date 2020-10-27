@@ -9,9 +9,10 @@ class Print extends Instruccion_1.Instruccion {
      * @param column columna de la instruccion print
      * @param expresion expresion que se va imprimir
      */
-    constructor(expresion, line, column) {
+    constructor(tipo, expresion, line, column) {
         super(line, column);
         this.expresion = expresion;
+        this.tipo = tipo;
     }
     tab(tab) {
         let n = 0;
@@ -24,7 +25,12 @@ class Print extends Instruccion_1.Instruccion {
     }
     translate(tab) {
         let tabu = this.tab(tab);
-        return tabu + "console.log(" + this.expresion.translate(0) + ");\n";
+        if (this.tipo == 'print_') {
+            return tabu + "print(" + this.expresion.translate(0) + ")\n";
+        }
+        if (this.tipo == 'println_') {
+            return tabu + "print(" + this.expresion.translate(0) + ',end="")\n';
+        }
     }
     generarGrafo(g, padre) {
         let nombreHijo = "nodo" + g.contador;

@@ -38,11 +38,11 @@ export class Else extends Instruccion {
             }
             cadena+="\n";
 
-            return tabu+" else:"+cadena;
+            return tabu+"else:"+cadena;
         }
         else{
             tab--;
-            return tabu+" el"+this.instruccion.translate(-tab);
+            return tabu+"el"+this.instruccion.translate(-tab);
         }
     }
 

@@ -37,13 +37,13 @@ class Expresion extends Instruccion_1.Instruccion {
             case Tipo_1.TypeOperation.PARENTESIS:
                 return "(" + this.operador1.translate(0) + ")";
             case Tipo_1.TypeOperation.AND:
-                return "&&" + this.operador1.translate(0) + this.operador2.translate(0);
+                return " and " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.OR:
-                return "||" + this.operador1.translate(0) + this.operador2.translate(0);
+                return " or " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.NOT:
-                return "!" + this.operador1.translate(0);
+                return " not " + this.operador1.translate(0);
             case Tipo_1.TypeOperation.XOR:
-                return "^" + this.operador1.translate(0) + this.operador2.translate(0);
+                return " xor " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.SUMA:
                 return "+" + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.RESTA:

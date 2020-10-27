@@ -29,9 +29,9 @@ export class Sentencia extends Instruccion {
         let tabu = this.tab(tab);
         tab++;
         if(this.nombre=="return"){
-            return tabu+""+this.nombre+" "+this.expresion.translate(0)+";\n";
+            return tabu+""+this.nombre+" "+this.expresion.translate(0)+"\n";
         }
-        return tabu+""+this.nombre+";\n";
+        return tabu+""+this.nombre+"\n";
     }
 
     generarGrafo(g: ValorGrafo, padre: String) {

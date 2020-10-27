@@ -175,17 +175,21 @@ export class Sintactico{
     }
     Print():Instruccion{
         let i ;
+        let tipo;
         this.match(this.Tokens[this.n],'system_'); 
         this.match(this.Tokens[this.n],'punto');
         this.match(this.Tokens[this.n],'out_');
         this.match(this.Tokens[this.n],'punto'); 
         if(this.Tokens[this.n].tipo=='print_'){
+            tipo =this.Tokens[this.n].tipo;
             this.match(this.Tokens[this.n],'print_');  
         }
         else if(this.Tokens[this.n].tipo=='println_'){
+            tipo =this.Tokens[this.n].tipo;
             this.match(this.Tokens[this.n],'println_');  
         }
         else{
+            tipo = "";
             this.match(this.Tokens[this.n],'println o print');
         }
         this.match(this.Tokens[this.n],'parAbre');
@@ -193,7 +197,7 @@ export class Sintactico{
         this.match(this.Tokens[this.n],'parCierra');
         this.match(this.Tokens[this.n],'pcoma');
 
-        i = new Print(exp,0,0);
+        i = new Print(tipo,exp,0,0);
         return i;
     }
 
@@ -317,7 +321,7 @@ export class Sintactico{
 
         switch(this.Tokens[this.n].tipo){
             case 'pcoma':
-                i = new Declaracion(tipo,this.Tokens[this.n-1].descripcion,null,null,0,0);
+                i = new Declaracion(tipo,id,null,null,0,0);
                 this.match(this.Tokens[this.n],'pcoma');
                 break;
             case 'coma':
@@ -352,11 +356,11 @@ export class Sintactico{
 
         switch(this.Tokens[this.n].tipo){
             case 'pcoma':
-                i = new Declaracion(Type.COMA,this.Tokens[this.n-1].descripcion,null,null,0,0);
+                i = new Declaracion(Type.COMA,id,null,null,0,0);
                 break;
             case 'coma':
                 this.match(this.Tokens[this.n],'coma');
-                i = new Declaracion(Type.COMA,this.Tokens[this.n-1].descripcion,null,this.Declara(),0,0);
+                i = new Declaracion(Type.COMA,id,null,this.Declara(),0,0);
                 break;
             case 'igual':
                 this.match(this.Tokens[this.n],'igual');

@@ -35,11 +35,11 @@ class Else extends Instruccion_1.Instruccion {
                 }
             }
             cadena += "\n";
-            return tabu + " else:" + cadena;
+            return tabu + "else:" + cadena;
         }
         else {
             tab--;
-            return tabu + " el" + this.instruccion.translate(-tab);
+            return tabu + "el" + this.instruccion.translate(-tab);
         }
     }
     generarGrafo(g, padre) {

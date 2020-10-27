@@ -8,28 +8,78 @@ export function AnalizarJava(entrada:string):String{
     let codigo = `
     
     public class IdentificadorClase {
-        if ( a > 5 ){
-            int a;
+        // Declaraciones de atributos y métodos
+        public void suma(int x, int y){
+            // Bloque de instrucciones
+        }
+    }
+    
+    public interface IdentificadorInterfaz {
+        // Definición de funciones
+        public void suma(int x, int y);
+    }
+    
+    public static void main(String[] args) {
+        for( int x = 0; x <= a+4; x++){
+            // Bloque de Instrucciones
+            }
+            for( double x = 20; x > 5*4; x --){
+            // Bloque de Instrucciones
+            }
+            
+            
+            boolean prueba = true;
+            while ( prueba ) {
+            System.out.println("Esto lo verás una vez");
+            prueba = false;
+            }
+            
+            int contador = 0 ;
+            do{
+            System.out.println ("Contador" + (contador + 1) );
+            contador ++;
+            } while (contador<10);
+            
+            
             if ( a > 5 ){
-                int b;
-                // Bloque de sentencias then
-                } else if (a < 5){
-                    int c;
-                // Bloque de sentencias else if
-                }else{
-                    int d;
-                // Bloque de sentencias else
-                }
+            // Bloque de sentencias then
             } else if (a < 5){
-                int f;
             // Bloque de sentencias else if
             }else{
-                int k;
             // Bloque de sentencias else
             }
-
+            
+            
+            break;
+            continue;
+            return a;
+            /*
+            *
+            * Este tipo de comentario
+            * soporta más de una línea
+            *
+            */
+            
+            
+            int x=0, y, z=9;
+            boolean ft = true;
+            double c = 1.2;
+            
+            x = true && false;
+            
+            mifuncion(x, "cadena", true);
+            
+            
+            System.out.println("texto con salto de línea");
+            System.out.print("texto sin salto de línea");
+            
             
     }
+    
+    
+    
+    
+    
     
         
         

@@ -34,7 +34,7 @@ class DoWhile extends Instruccion_1.Instruccion {
             }
         }
         cadena += "\n";
-        cadena += tabu + "if " + this.condicion.translate(0) + ":\n" + this.tab(tab) + "break\n";
+        cadena += this.tab(tab) + "if " + this.condicion.translate(0) + ":\n" + this.tab(tab + 1) + "break\n";
         return tabu + "while True:\n" + cadena + "\n";
     }
     generarGrafo(g, padre) {

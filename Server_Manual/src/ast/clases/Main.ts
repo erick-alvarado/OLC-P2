@@ -17,9 +17,18 @@ export class Main extends Instruccion {
         this.id = id;
         this.instrucciones=instrucciones;
     }
-
+    tab(tab: number): String{
+        let n =0
+        let tabs = ""
+        while(tab>n){
+            tabs+="\t"
+            n++;
+        }
+        return tabs;
+    }
     translate(tab: number) {
         tab = 1
+        let tabu = this.tab(tab);
         let cadena = "\n";
         if (this.instrucciones!=null){
             for (const ins of this.instrucciones) {
@@ -28,7 +37,7 @@ export class Main extends Instruccion {
         }
         
         cadena+="\n"
-        return "function main ():"+cadena;
+        return "def main ():"+cadena+tabu+'if __name__="__main__":\n'+tabu+"\t"+"main()\n";
     }
     generarGrafo(g: ValorGrafo, padre: String) {
        

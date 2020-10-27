@@ -159,24 +159,28 @@ class Sintactico {
     }
     Print() {
         let i;
+        let tipo;
         this.match(this.Tokens[this.n], 'system_');
         this.match(this.Tokens[this.n], 'punto');
         this.match(this.Tokens[this.n], 'out_');
         this.match(this.Tokens[this.n], 'punto');
         if (this.Tokens[this.n].tipo == 'print_') {
+            tipo = this.Tokens[this.n].tipo;
             this.match(this.Tokens[this.n], 'print_');
         }
         else if (this.Tokens[this.n].tipo == 'println_') {
+            tipo = this.Tokens[this.n].tipo;
             this.match(this.Tokens[this.n], 'println_');
         }
         else {
+            tipo = "";
             this.match(this.Tokens[this.n], 'println o print');
         }
         this.match(this.Tokens[this.n], 'parAbre');
         let exp = this.E();
         this.match(this.Tokens[this.n], 'parCierra');
         this.match(this.Tokens[this.n], 'pcoma');
-        i = new Print_1.Print(exp, 0, 0);
+        i = new Print_1.Print(tipo, exp, 0, 0);
         return i;
     }
     If() {
@@ -288,7 +292,7 @@ class Sintactico {
         let id = this.Tokens[this.n - 1].descripcion;
         switch (this.Tokens[this.n].tipo) {
             case 'pcoma':
-                i = new Declaracion_1.Declaracion(tipo, this.Tokens[this.n - 1].descripcion, null, null, 0, 0);
+                i = new Declaracion_1.Declaracion(tipo, id, null, null, 0, 0);
                 this.match(this.Tokens[this.n], 'pcoma');
                 break;
             case 'coma':
@@ -322,11 +326,11 @@ class Sintactico {
         let id = this.Tokens[this.n - 1].descripcion;
         switch (this.Tokens[this.n].tipo) {
             case 'pcoma':
-                i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, this.Tokens[this.n - 1].descripcion, null, null, 0, 0);
+                i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, id, null, null, 0, 0);
                 break;
             case 'coma':
                 this.match(this.Tokens[this.n], 'coma');
-                i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, this.Tokens[this.n - 1].descripcion, null, this.Declara(), 0, 0);
+                i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, id, null, this.Declara(), 0, 0);
                 break;
             case 'igual':
                 this.match(this.Tokens[this.n], 'igual');

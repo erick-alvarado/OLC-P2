@@ -51,19 +51,19 @@ class Declaracion extends Instruccion_1.Instruccion {
         if (this.valor == null) {
             //DECLARACION-> ID ;
             if (this.valores == null) {
-                return tabu + "var " + this.id + ";\n";
+                return tabu + "var " + this.id + "\n";
             }
             //DECLARACION-> ID, DECLARA ;
             else {
-                return tabu + "var " + this.id + "," + this.valores.translate(0) + ";\n";
+                return tabu + "var " + this.id + "," + this.valores.translate(0) + "\n";
             }
         }
         //DECLARACION-> ID=EXP, DECLARA ;
         if (this.valores != null) {
-            return tabu + "var " + this.id + "=" + this.valor.translate(0) + "," + this.valores.translate(0) + ";\n";
+            return tabu + "var " + this.id + "=" + this.valor.translate(0) + "," + this.valores.translate(0) + "\n";
         }
         //DECLARACION-> ID=EXP;
-        return tabu + "var " + this.id + "=" + this.valor.translate(0) + "; \n";
+        return tabu + "var " + this.id + "=" + this.valor.translate(0) + " \n";
     }
     generarGrafo(g, padre) {
         let padreAux = padre; //Auxiar con nombre del padre

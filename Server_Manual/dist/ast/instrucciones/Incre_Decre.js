@@ -30,9 +30,9 @@ class Incre_Decre extends Instruccion_1.Instruccion {
         let tabu = this.tab(tab);
         switch (this.tipoOperacion) {
             case Tipo_1.TypeOperation.ADICION:
-                return tabu + "" + this.identificador + "++\n";
+                return tabu + "" + this.identificador + "+=1\n";
             case Tipo_1.TypeOperation.SUBSTRACCION:
-                return tabu + "" + this.identificador + "--\n";
+                return tabu + "" + this.identificador + "-=1\n";
         }
         return "que pedo";
     }
