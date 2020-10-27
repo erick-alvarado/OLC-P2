@@ -5,12 +5,10 @@ const Error_1 = require("./ast/Error_");
 const Asignacion_1 = require("../dist/ast/instrucciones/Asignacion");
 const Declaracion_1 = require("../dist/ast/instrucciones/Declaracion");
 const While_1 = require("../dist/ast/instrucciones/While");
+const DoWhile_1 = require("../dist/ast/instrucciones/DoWhile");
 const Llamada_1 = require("../dist/ast/instrucciones/Llamada");
 const Incre_Decre_1 = require("../dist/ast/instrucciones/Incre_Decre");
-const OperacionAritmetica_1 = require("../dist/ast/expresiones/OperacionAritmetica");
-const OperacionLogica_1 = require("../dist/ast/expresiones/OperacionLogica");
-const OperacionRelacional_1 = require("../dist/ast/expresiones/OperacionRelacional");
-const Identificador_1 = require("../dist/ast/expresiones/Identificador");
+const Expresion_1 = require("../dist/ast/expresiones/Expresion");
 const Primitivo_1 = require("../dist/ast/expresiones/Primitivo");
 const Tipo_1 = require("../dist/ast/Tipo");
 const Tipo_2 = require("../dist/ast/Tipo");
@@ -114,6 +112,7 @@ class Sintactico {
                     instrucciones.push(this.While());
                     break;
                 case 'do_':
+                    instrucciones.push(this.Do());
                     break;
                 case 'for_':
                     break;
@@ -138,11 +137,23 @@ class Sintactico {
         let i;
         return i;
     }
+    Do() {
+        let i;
+        this.match(this.Tokens[this.n], 'do_');
+        let bloque = this.Bloque_Sentencias();
+        this.match(this.Tokens[this.n], 'while_');
+        this.match(this.Tokens[this.n], 'parAbre');
+        let exp = this.E();
+        this.match(this.Tokens[this.n], 'parCierra');
+        this.match(this.Tokens[this.n], 'pcoma');
+        i = new DoWhile_1.DoWhile();
+        return i;
+    }
     While() {
         let i;
         this.match(this.Tokens[this.n], 'while_');
         this.match(this.Tokens[this.n], 'parAbre');
-        let exp = this.Expresiones();
+        let exp = this.E();
         this.match(this.Tokens[this.n], 'parCierra');
         let bloque = this.Bloque_Sentencias();
         i = new While_1.While(exp, bloque, 0, 0);
@@ -203,7 +214,7 @@ class Sintactico {
                 break;
             case 'igual':
                 this.match(this.Tokens[this.n], 'igual');
-                let exp = this.Expresion();
+                let exp = this.E();
                 if (this.Tokens[this.n].tipo == 'pcoma') {
                     i = new Declaracion_1.Declaracion(tipo, id, exp, null, 0, 0);
                 }
@@ -235,7 +246,7 @@ class Sintactico {
                 break;
             case 'igual':
                 this.match(this.Tokens[this.n], 'igual');
-                let exp = this.Expresion();
+                let exp = this.E();
                 if (this.Tokens[this.n].tipo == 'pcoma') {
                     i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, id, exp, null, 0, 0);
                 }
@@ -290,7 +301,7 @@ class Sintactico {
     Asignacion() {
         this.match(this.Tokens[this.n], 'identificador');
         this.match(this.Tokens[this.n], 'igual');
-        let i = new Asignacion_1.Asignacion(this.Tokens[this.n - 2].descripcion, this.Expresiones(), 0, 0);
+        let i = new Asignacion_1.Asignacion(this.Tokens[this.n - 2].descripcion, this.E(), 0, 0);
         this.match(this.Tokens[this.n], 'pcoma');
         return i;
     }
@@ -364,118 +375,235 @@ class Sintactico {
         }
         return i;
     }
-    Expresiones() {
-        let i = [];
-        i.push(this.Expresion());
-        while (this.Tokens[this.n].tipo != 'pcoma') {
-            if (this.Tokens[this.n].tipo == 'parCierra') {
-                return i;
-            }
-            else if (this.Tokens[this.n - 1].tipo == 'menos_menos' || this.Tokens[this.n - 1].tipo == 'mas_mas' || this.Tokens[this.n - 1].tipo == 'identificador' || this.Tokens[this.n - 1].tipo == 'entero' || this.Tokens[this.n - 1].tipo == 'decimal' || this.Tokens[this.n - 1].tipo == 'caracter' || this.Tokens[this.n - 1].tipo == 'cadena' || this.Tokens[this.n - 1].tipo == 'true_' || this.Tokens[this.n - 1].tipo == 'false_') {
-                i.push(this.Expresion_Opera());
-            }
-            else {
-                i.push(this.Expresion());
-            }
-            if (this.n >= this.Tokens.length) {
-                return i;
-            }
-        }
+    E() {
+        let i;
+        let t = this.T();
+        let ep = this.EP();
+        i = new Expresion_1.Expresion(Tipo_2.TypeOperation.E, t, ep, 0, 0);
         return i;
     }
-    Expresion() {
-        let i;
+    EP() {
+        let tipo = null;
+        let t = null;
+        let ep = null;
         switch (this.Tokens[this.n].tipo) {
-            case 'distinto':
-                this.match(this.Tokens[this.n], 'distinto');
-                i = new OperacionRelacional_1.OperacionRelacional(Tipo_2.TypeOperation.DISTINTO, this.Expresion(), null, 0, 0);
-                break;
-            case 'not_':
-                this.match(this.Tokens[this.n], 'not_');
-                i = new OperacionLogica_1.OperacionLogica(Tipo_2.TypeOperation.NOT, this.Expresion(), null, 0, 0);
+            case 'mas':
+                tipo = Tipo_2.TypeOperation.SUMA;
+                this.match(this.Tokens[this.n], 'mas');
+                t = this.T();
+                ep = this.EP();
                 break;
             case 'menos':
+                tipo = Tipo_2.TypeOperation.RESTA;
                 this.match(this.Tokens[this.n], 'menos');
-                i = new OperacionAritmetica_1.OperacionAritmetica(Tipo_2.TypeOperation.MENOSUNARIO, this.Expresion(), null, 0, 0);
+                t = this.T();
+                ep = this.EP();
                 break;
+            case 'mayorQ':
+                tipo = Tipo_2.TypeOperation.MAYOR;
+                this.match(this.Tokens[this.n], 'mayorQ');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'menorQ':
+                tipo = Tipo_2.TypeOperation.MENOR;
+                this.match(this.Tokens[this.n], 'menorQ');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'mayorQ_igual':
+                tipo = Tipo_2.TypeOperation.MAYOR_IGUAL;
+                this.match(this.Tokens[this.n], 'mayorQ_igual');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'menorQ_igual':
+                tipo = Tipo_2.TypeOperation.MENOR_IGUAL;
+                this.match(this.Tokens[this.n], 'menorQ_igual');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'igual_igual':
+                tipo = Tipo_2.TypeOperation.IGUAL_IGUAL;
+                this.match(this.Tokens[this.n], 'igual_igual');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'distinto':
+                tipo = Tipo_2.TypeOperation.DISTINTO;
+                this.match(this.Tokens[this.n], 'distinto');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'or_':
+                tipo = Tipo_2.TypeOperation.OR;
+                this.match(this.Tokens[this.n], 'or_');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'and_':
+                tipo = Tipo_2.TypeOperation.AND;
+                this.match(this.Tokens[this.n], 'and_');
+                t = this.T();
+                ep = this.EP();
+                break;
+            case 'xor_':
+                tipo = Tipo_2.TypeOperation.XOR;
+                this.match(this.Tokens[this.n], 'xor_');
+                t = this.T();
+                ep = this.EP();
+                break;
+            default:
+                break;
+        }
+        return new Expresion_1.Expresion(tipo, t, ep, 0, 0);
+    }
+    T() {
+        let f = this.F();
+        let tp = this.TP();
+        return new Expresion_1.Expresion(Tipo_2.TypeOperation.T, f, tp, 0, 0);
+        ;
+    }
+    TP() {
+        let tipo = null;
+        let f = null;
+        let tp = null;
+        switch (this.Tokens[this.n].tipo) {
+            case 'por':
+                tipo = Tipo_2.TypeOperation.MULTIPLICACION;
+                this.match(this.Tokens[this.n], 'por');
+                f = this.F();
+                tp = this.TP();
+                break;
+            case 'division':
+                tipo = Tipo_2.TypeOperation.DIVISION;
+                this.match(this.Tokens[this.n], 'division');
+                f = this.F();
+                tp = this.TP();
+                break;
+            default:
+                break;
+        }
+        return new Expresion_1.Expresion(tipo, f, tp, 0, 0);
+    }
+    F() {
+        let tipo = null;
+        let e = null;
+        switch (this.Tokens[this.n].tipo) {
             case 'parAbre':
                 this.match(this.Tokens[this.n], 'parAbre');
-                i = new OperacionAritmetica_1.OperacionAritmetica(Tipo_2.TypeOperation.PARENTESIS, this.Expresion(), null, 0, 0);
+                e = this.E();
                 this.match(this.Tokens[this.n], 'parCierra');
+                return new Expresion_1.Expresion(Tipo_2.TypeOperation.PARENTESIS, e, null, 0, 0);
+            case 'not_':
+                this.match(this.Tokens[this.n], 'not_');
+                e = this.E();
+                return new Expresion_1.Expresion(Tipo_2.TypeOperation.NOT, e, null, 0, 0);
+            case 'menos':
+                this.match(this.Tokens[this.n], 'menos');
+                e = this.E();
+                return new Expresion_1.Expresion(Tipo_2.TypeOperation.MENOSUNARIO, e, null, 0, 0);
+            default:
+                return this.Primitivo();
+        }
+    }
+    /*
+
+    Expresion2(): Instruccion{
+        let i ;
+        switch(this.Tokens[this.n].tipo){
+            case 'distinto':
+                this.match(this.Tokens[this.n],'distinto');
+                i = new OperacionRelacional(TypeOperation.DISTINTO,this.Expresion(),null,0,0);
+                break;
+            case 'not_':
+                this.match(this.Tokens[this.n],'not_');
+                i = new OperacionLogica(TypeOperation.NOT,this.Expresion(),null,0,0);
+                break;
+            case 'menos':
+                this.match(this.Tokens[this.n],'menos');
+                i = new OperacionAritmetica(TypeOperation.MENOSUNARIO,this.Expresion(),null,0,0);
+                break;
+            case 'parAbre':
+                this.match(this.Tokens[this.n],'parAbre');
+                i = new OperacionAritmetica(TypeOperation.PARENTESIS,this.Expresion(),null,0,0);
+                this.match(this.Tokens[this.n],'parCierra');
                 break;
             case 'identificador':
-                if (this.Tokens[this.n + 1].tipo == 'mas_mas' || this.Tokens[this.n + 1].tipo == 'menos_menos') {
-                    i = this.Incremento_Decremento();
+                if(this.Tokens[this.n+1].tipo=='mas_mas'||this.Tokens[this.n+1].tipo=='menos_menos'){
+                    i =this.Incremento_Decremento();
                 }
-                else {
-                    this.match(this.Tokens[this.n], 'identificador');
-                    i = new Identificador_1.Identificador(this.Tokens[this.n - 1].descripcion);
+                else{
+                    this.match(this.Tokens[this.n],'identificador');
+                    i = new Identificador(this.Tokens[this.n-1].descripcion);
                 }
                 break;
             default:
                 i = this.Primitivo();
                 break;
+        
         }
         return i;
     }
-    Expresion_Opera() {
-        let i;
-        switch (this.Tokens[this.n].tipo) {
+    Expresion_Opera(): Instruccion{
+        let i ;
+        switch(this.Tokens[this.n].tipo){
             case 'por':
-                this.match(this.Tokens[this.n], 'por');
-                i = new OperacionAritmetica_1.OperacionAritmetica(Tipo_2.TypeOperation.MULTIPLICACION, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'por');
+                i = new OperacionAritmetica( TypeOperation.MULTIPLICACION,this.Expresion(),null,0,0);
                 break;
             case 'division':
-                this.match(this.Tokens[this.n], 'division');
-                i = new OperacionAritmetica_1.OperacionAritmetica(Tipo_2.TypeOperation.DIVISION, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'division');
+                i = new OperacionAritmetica( TypeOperation.DIVISION,this.Expresion(),null,0,0);
                 break;
             case 'mas':
-                this.match(this.Tokens[this.n], 'mas');
-                i = new OperacionAritmetica_1.OperacionAritmetica(Tipo_2.TypeOperation.SUMA, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'mas');
+                i = new OperacionAritmetica( TypeOperation.SUMA,this.Expresion(),null,0,0);
                 break;
             case 'menos':
-                this.match(this.Tokens[this.n], 'menos');
-                i = new OperacionAritmetica_1.OperacionAritmetica(Tipo_2.TypeOperation.RESTA, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'menos');
+                i = new OperacionAritmetica(  TypeOperation.RESTA,this.Expresion(),null,0,0);
                 break;
             case 'mayorQ':
-                this.match(this.Tokens[this.n], 'mayorQ');
-                i = new OperacionRelacional_1.OperacionRelacional(Tipo_2.TypeOperation.MAYOR, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'mayorQ');
+                i =  new OperacionRelacional( TypeOperation.MAYOR,this.Expresion(),null,0,0);
                 break;
             case 'menorQ':
-                this.match(this.Tokens[this.n], 'menorQ');
-                i = new OperacionRelacional_1.OperacionRelacional(Tipo_2.TypeOperation.MENOR, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'menorQ');
+                i =  new OperacionRelacional( TypeOperation.MENOR,this.Expresion(),null,0,0);
                 break;
             case 'mayorQ_igual':
-                this.match(this.Tokens[this.n], 'mayorQ_igual');
-                i = new OperacionRelacional_1.OperacionRelacional(Tipo_2.TypeOperation.MAYOR_IGUAL, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'mayorQ_igual');
+                i =  new OperacionRelacional( TypeOperation.MAYOR_IGUAL,this.Expresion(),null,0,0);
                 break;
             case 'menorQ_igual':
-                this.match(this.Tokens[this.n], 'menorQ_igual');
-                i = new OperacionRelacional_1.OperacionRelacional(Tipo_2.TypeOperation.MENOR_IGUAL, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'menorQ_igual');
+                i =  new OperacionRelacional( TypeOperation.MENOR_IGUAL,this.Expresion(),null,0,0);
                 break;
             case 'igual_igual':
-                this.match(this.Tokens[this.n], 'igual_igual');
-                i = new OperacionRelacional_1.OperacionRelacional(Tipo_2.TypeOperation.IGUAL_IGUAL, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'igual_igual');
+                i =  new OperacionRelacional(  TypeOperation.IGUAL_IGUAL,this.Expresion(),null,0,0);
                 break;
             case 'or_':
-                this.match(this.Tokens[this.n], 'or_');
-                i = new OperacionLogica_1.OperacionLogica(Tipo_2.TypeOperation.OR, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'or_');
+                i =  new OperacionLogica( TypeOperation.OR,this.Expresion(),null,0,0);
                 break;
             case 'and_':
-                this.match(this.Tokens[this.n], 'and_');
-                i = new OperacionLogica_1.OperacionLogica(Tipo_2.TypeOperation.AND, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'and_');
+                i =  new OperacionLogica( TypeOperation.AND,this.Expresion(),null,0,0);
                 break;
             case 'xor_':
-                this.match(this.Tokens[this.n], 'xor_');
-                i = new OperacionLogica_1.OperacionLogica(Tipo_2.TypeOperation.XOR, this.Expresion(), null, 0, 0);
+                this.match(this.Tokens[this.n],'xor_');
+                i =  new OperacionLogica( TypeOperation.XOR,this.Expresion(),null,0,0);
                 break;
             default:
-                i = new OperacionRelacional_1.OperacionRelacional("ERROR", null, null, 0, 0);
-                this.match(this.Tokens[this.n], 'ERROR');
+                i = new OperacionRelacional("ERROR",null,null,0,0);
+                this.match(this.Tokens[this.n],'ERROR');
                 break;
         }
         return i;
     }
+        */
     match(token, esperado) {
         if (token.tipo == esperado) {
         }

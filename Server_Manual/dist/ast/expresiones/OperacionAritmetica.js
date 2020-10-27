@@ -42,7 +42,7 @@ class OperacionAritmetica extends Instruccion_1.Instruccion {
             g.grafo += "  " + nombreHijo + "[label=\"" + this.operador1.getNombreHijo() + "\"];\n";
             g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
             g.contador++;
-            this.operador1.generarGrafo(g, nombreHijo);
+            this.operador1.generarGrafo(g, padre);
         }
     }
     getNombreHijo() {

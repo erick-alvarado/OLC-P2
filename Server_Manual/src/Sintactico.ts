@@ -14,9 +14,7 @@ import { Llamada } from "../dist/ast/instrucciones/Llamada";
 import { For } from "../dist/ast/instrucciones/For";
 import { Incre_Decre } from "../dist/ast/instrucciones/Incre_Decre";
 
-import { OperacionAritmetica } from "../dist/ast/expresiones/OperacionAritmetica";
-import { OperacionLogica } from "../dist/ast/expresiones/OperacionLogica";
-import { OperacionRelacional } from "../dist/ast/expresiones/OperacionRelacional";
+import { Expresion } from "../dist/ast/expresiones/Expresion";
 import { Identificador } from "../dist/ast/expresiones/Identificador";
 import { Primitivo } from "../dist/ast/expresiones/Primitivo";	
 import { Type } from "../dist/ast/Tipo";
@@ -132,6 +130,7 @@ export class Sintactico{
                     instrucciones.push(this.While());
                     break;
                 case 'do_':
+                    instrucciones.push(this.Do());
                     break;
                 case 'for_':
                     break;
@@ -160,12 +159,26 @@ export class Sintactico{
 
         return i;
     }
+    Do():Instruccion{
+        let i ;
+        this.match(this.Tokens[this.n],'do_'); 
+        let bloque = this.Bloque_Sentencias();
+        this.match(this.Tokens[this.n],'while_'); 
+        this.match(this.Tokens[this.n],'parAbre'); 
+        let exp = this.E();
+        this.match(this.Tokens[this.n],'parCierra'); 
+        this.match(this.Tokens[this.n],'pcoma'); 
+        i = new DoWhile()
+
+
+        return i;
+    }
 
     While():Instruccion{
         let i ;
         this.match(this.Tokens[this.n],'while_'); 
         this.match(this.Tokens[this.n],'parAbre'); 
-        let exp = this.Expresiones();
+        let exp = this.E();
         this.match(this.Tokens[this.n],'parCierra');
         let bloque = this.Bloque_Sentencias();
         i = new While(exp,bloque,0,0);
@@ -231,7 +244,7 @@ export class Sintactico{
                 break;
             case 'igual':
                 this.match(this.Tokens[this.n],'igual');
-                let exp = this.Expresion();
+                let exp = this.E();
                 if(this.Tokens[this.n].tipo=='pcoma'){
                     i = new Declaracion(tipo,id,exp,null,0,0);
                 }
@@ -264,7 +277,7 @@ export class Sintactico{
                 break;
             case 'igual':
                 this.match(this.Tokens[this.n],'igual');
-                let exp = this.Expresion();
+                let exp = this.E();
                 if(this.Tokens[this.n].tipo=='pcoma'){
                     i = new Declaracion(Type.COMA,id,exp,null,0,0);
                 }
@@ -320,7 +333,7 @@ export class Sintactico{
     Asignacion(): Instruccion{
         this.match(this.Tokens[this.n],'identificador');
         this.match(this.Tokens[this.n],'igual');
-        let i = new Asignacion(this.Tokens[this.n-2].descripcion, this.Expresiones(),0,0 );
+        let i = new Asignacion(this.Tokens[this.n-2].descripcion, this.E(),0,0 );
         this.match(this.Tokens[this.n],'pcoma');
         return i;
     }
@@ -395,27 +408,151 @@ export class Sintactico{
         }
         return i;
     }
-    Expresiones(): Array <Instruccion>{
-        let i : Array<Instruccion> = [];
-        i.push(this.Expresion());
-        
-        while(this.Tokens[this.n].tipo !='pcoma' ){
-            if(this.Tokens[this.n].tipo =='parCierra'){
-                return i;
-            }
-            else if(this.Tokens[this.n-1].tipo=='menos_menos'||this.Tokens[this.n-1].tipo=='mas_mas'||this.Tokens[this.n-1].tipo=='identificador'||this.Tokens[this.n-1].tipo == 'entero'||this.Tokens[this.n-1].tipo == 'decimal'||this.Tokens[this.n-1].tipo == 'caracter'||this.Tokens[this.n-1].tipo == 'cadena'||this.Tokens[this.n-1].tipo == 'true_'||this.Tokens[this.n-1].tipo == 'false_'){
-                i.push(this.Expresion_Opera());
-            }
-            else{
-                i.push(this.Expresion());
-            }
-            if(this.n>=this.Tokens.length){
-                return i;
-            }
-        }
+   
+    E(): Instruccion{
+        let i;
+        let t =this.T();
+        let ep =this.EP();
+        i = new Expresion(TypeOperation.E, t , ep,0,0);
         return i;
     }
-    Expresion(): Instruccion{
+    EP(): Instruccion{
+        let tipo= null;
+        let t= null;
+        let ep=null;
+        switch(this.Tokens[this.n].tipo){
+            case 'mas':
+                tipo = TypeOperation.SUMA;
+                this.match(this.Tokens[this.n],'mas');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'menos':
+                tipo = TypeOperation.RESTA;
+                this.match(this.Tokens[this.n],'menos');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'mayorQ':
+                tipo = TypeOperation.MAYOR;
+                this.match(this.Tokens[this.n],'mayorQ');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'menorQ':
+                tipo = TypeOperation.MENOR;
+                this.match(this.Tokens[this.n],'menorQ');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'mayorQ_igual':
+                tipo = TypeOperation.MAYOR_IGUAL;
+                this.match(this.Tokens[this.n],'mayorQ_igual');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'menorQ_igual':
+                tipo = TypeOperation.MENOR_IGUAL;
+                this.match(this.Tokens[this.n],'menorQ_igual');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'igual_igual':
+                tipo = TypeOperation.IGUAL_IGUAL;
+                this.match(this.Tokens[this.n],'igual_igual');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'distinto':
+                tipo = TypeOperation.DISTINTO;
+                this.match(this.Tokens[this.n],'distinto');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'or_':
+                tipo = TypeOperation.OR;
+                this.match(this.Tokens[this.n],'or_');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'and_':
+                tipo = TypeOperation.AND;
+                this.match(this.Tokens[this.n],'and_');
+                t= this.T();
+                ep =this.EP();
+                break;
+            case 'xor_':
+                tipo = TypeOperation.XOR;
+                this.match(this.Tokens[this.n],'xor_');
+                t= this.T();
+                ep =this.EP();
+                break;
+            
+            default:
+                break;
+        }
+        return new Expresion(tipo,t,ep,0,0);
+    }
+    T(): Instruccion{
+        let f =this.F();
+        let tp = this.TP();
+        return new Expresion(TypeOperation.T,f,tp,0,0);;
+    }
+    TP(): Instruccion{
+        let tipo=null;
+        let f = null;
+        let tp = null;
+        switch(this.Tokens[this.n].tipo){
+            case 'por':
+                tipo = TypeOperation.MULTIPLICACION;
+                this.match(this.Tokens[this.n],'por');
+                f=this.F();
+                tp=this.TP();
+                break;
+            case 'division':
+                tipo = TypeOperation.DIVISION;
+                this.match(this.Tokens[this.n],'division');
+                f=this.F();
+                tp =this.TP();
+                break;
+            default:
+                break;
+        }
+        return new Expresion(tipo, f,tp,0,0);
+    }
+    F(): Instruccion{
+        let tipo =null ;
+        let e = null;
+
+        switch(this.Tokens[this.n].tipo){
+            case 'parAbre':
+                this.match(this.Tokens[this.n],'parAbre');
+                e=this.E();
+                this.match(this.Tokens[this.n],'parCierra');
+                return new Expresion(TypeOperation.PARENTESIS,e,null,0,0);
+            case 'not_':
+                this.match(this.Tokens[this.n],'not_');
+                e=this.E();
+                return new Expresion(TypeOperation.NOT,e,null,0,0);
+            case 'menos':
+                this.match(this.Tokens[this.n],'menos');
+                e=this.E();
+                return new Expresion(TypeOperation.MENOSUNARIO,e,null,0,0);
+            default:
+                return this.Primitivo();
+        }
+    }
+
+
+
+
+
+
+
+
+    /*
+
+    Expresion2(): Instruccion{
         let i ;
         switch(this.Tokens[this.n].tipo){
             case 'distinto':
@@ -509,7 +646,7 @@ export class Sintactico{
         }
         return i;
     }
-
+        */
     match(token: Token,esperado: string ){
         if(token.tipo==esperado){
         }

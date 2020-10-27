@@ -36,8 +36,6 @@ export class DoWhile extends Instruccion {
         }
         cadena+="\n"+tabu+"}"
 
-
-
         return tabu+"do"+cadena+"while("+this.condicion.translate(0)+");\n";
     }
 

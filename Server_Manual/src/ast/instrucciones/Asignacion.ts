@@ -3,7 +3,7 @@ import { ValorGrafo } from "../grafo/ValorGrafo";
 
 export class Asignacion extends Instruccion {
     id:String;
-    valor:Array<Instruccion>;
+    valor:Instruccion;
     /**
      *  a = 5;
      * @class La instruccion asignacion, modifica el valor de una variable en la tabla de simbolos
@@ -12,7 +12,7 @@ export class Asignacion extends Instruccion {
      * @param column columna donde se esata asignando el nuevo valor a la variable
      * @param valor nuevo valor que se le asignara a la variable
      */
-    constructor(id:String, valor:Array<Instruccion>, line:Number, column:Number){
+    constructor(id:String, valor:Instruccion, line:Number, column:Number){
         super(line,column)
         this.id = id;
         this.valor = valor;
@@ -28,13 +28,7 @@ export class Asignacion extends Instruccion {
     }
     translate(tab:number) {
         let tabu = this.tab(tab);
-        let cadena=""
-        if (this.valor.length>0){
-            for (const ins of this.valor) {
-                cadena += ins.translate(tab);
-            }
-        }
-        return tabu+""+this.id + " = " + cadena + ";\n";
+        return tabu+""+this.id + " = " + this.valor.translate(0) + ";\n";
     }
     generarGrafo(g: ValorGrafo, padre: String) {
         
@@ -49,14 +43,12 @@ export class Asignacion extends Instruccion {
         g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
         g.contador++;
         
-        for (let x = 0; x < this.valor.length; x++) {
-            let inst = this.valor[x];
-            nombreHijo = "nodo"+g.contador;
-            g.grafo += "  "+nombreHijo +"[label=\""+inst.getNombreHijo()+"\"];\n";
-            g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
-            g.contador++;
-            inst.generarGrafo(g,nombreHijo);
-        }
+        nombreHijo = "nodo"+g.contador;
+        g.grafo += "  "+nombreHijo +"[label=\""+this.valor.getNombreHijo()+"\"];\n";
+        g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
+        g.contador++;
+        this.valor.generarGrafo(g,nombreHijo);
+
         nombreHijo = "nodo"+g.contador;
         g.grafo += "  "+nombreHijo +"[label=\";\"];\n";
         g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";

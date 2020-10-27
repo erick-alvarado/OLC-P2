@@ -32,5 +32,10 @@ var TypeOperation;
     TypeOperation[TypeOperation["DISTINTO"] = 16] = "DISTINTO";
     TypeOperation[TypeOperation["IGUAL"] = 17] = "IGUAL";
     TypeOperation[TypeOperation["PARENTESIS"] = 18] = "PARENTESIS";
+    TypeOperation[TypeOperation["E"] = 19] = "E";
+    TypeOperation[TypeOperation["EP"] = 20] = "EP";
+    TypeOperation[TypeOperation["T"] = 21] = "T";
+    TypeOperation[TypeOperation["TP"] = 22] = "TP";
+    TypeOperation[TypeOperation["F"] = 23] = "F";
 })(TypeOperation = exports.TypeOperation || (exports.TypeOperation = {}));
 //# sourceMappingURL=Tipo.js.map
