@@ -146,7 +146,7 @@ class Sintactico {
         let exp = this.E();
         this.match(this.Tokens[this.n], 'parCierra');
         this.match(this.Tokens[this.n], 'pcoma');
-        i = new DoWhile_1.DoWhile();
+        i = new DoWhile_1.DoWhile(exp, bloque, 0, 0);
         return i;
     }
     While() {

@@ -168,7 +168,7 @@ export class Sintactico{
         let exp = this.E();
         this.match(this.Tokens[this.n],'parCierra'); 
         this.match(this.Tokens[this.n],'pcoma'); 
-        i = new DoWhile()
+        i = new DoWhile(exp,bloque,0,0)
 
 
         return i;
@@ -185,10 +185,6 @@ export class Sintactico{
         i = new While(exp,bloque,0,0);
         return i;
     }
-
-    
-
-
     Funcion_Clase_Interface(): Instruccion{
         let i;
         this.match(this.Tokens[this.n],'public_');

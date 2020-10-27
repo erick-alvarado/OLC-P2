@@ -8,10 +8,11 @@ const Sintactico_1 = require("./Sintactico");
 function AnalizarJava(entrada) {
     let codigo = `
     public class IdentificadorClase {
-        //boolean prueba = true;
-        while ( -5<=4>=9^23&&10||4.78956) {
-        prueba = false;
-        }
+        int contador = 0 ;
+    do{
+    contador ++;    
+
+    } while (contador!1+6<10);
         
         
     }
