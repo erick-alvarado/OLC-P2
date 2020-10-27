@@ -32,9 +32,9 @@ export class Incre_Decre extends Instruccion {
         
         switch(this.tipoOperacion){
             case TypeOperation.ADICION:
-                return tabu+""+this.identificador+"++;";
+                return tabu+""+this.identificador+"++;\n";
             case TypeOperation.SUBSTRACCION:
-                return tabu+""+this.identificador+"--;";
+                return tabu+""+this.identificador+"--;\n";
         }
         return "que pedo"
     }

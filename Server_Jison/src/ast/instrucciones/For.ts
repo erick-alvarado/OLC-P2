@@ -39,7 +39,7 @@ export class For extends Instruccion {
             }
         }
         cadena+="\n"+tabu+"}\n"
-        return tabu+"for("+this.declaracion.translate(0).replace("\n","")+";"+this.condicion.translate(0)+";"+this.incremento.translate(0)+")"+cadena;
+        return tabu+"for("+this.declaracion.translate(0).replace("\n","")+this.condicion.translate(0).replace("\n","")+";"+this.incremento.translate(0).replace("\n","").replace(";","")+")"+cadena;
     }
 
     generarGrafo(g: ValorGrafo, padre: String) {

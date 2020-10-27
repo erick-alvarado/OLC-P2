@@ -6,15 +6,22 @@ const GrafoAST_1 = require("./ast/grafo/GrafoAST");
 function AnalizarJava(entrada) {
     let codigo = `
 
-    public class IdentificadorClase {
-        x++;
-        x--;
-        x= !a||b&&c^z;
-        int x=0, y, z=9;
-        boolean ft = true;
-        double c = 1.2;
-                
-        }
+    public interface IdentificadorInterfaz {
+        if ( a > 5 ){
+            if ( a > 5 ){
+                // Bloque de sentencias then
+                } else if (a < 5){
+                // Bloque de sentencias else if
+                }else{
+                // Bloque de sentencias else
+                }
+            } else if (a < 5){
+            // Bloque de sentencias else if
+            }else{
+            // Bloque de sentencias else
+            }
+    }
+    
     `;
     let ast = Gramatica.parse(codigo);
     //Inicia la generacion del grafo
@@ -23,7 +30,7 @@ function AnalizarJava(entrada) {
     console.log("\n\n---------------- ERRORES ----------------\n");
     console.log(ast.getlistaErrores());
     console.log("\n\n---------------- TOKENS ----------------\n");
-    console.log(ast.getlistaTokens());
+    //console.log(ast.listaToken);
     console.log("\n--------------------------------------------\n");
     console.log("\n\n------------------TRADUCCION----------------\n");
     console.log(ast.translate(0));
