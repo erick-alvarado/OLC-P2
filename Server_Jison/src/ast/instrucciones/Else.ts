@@ -42,7 +42,7 @@ export class Else extends Instruccion {
         }
         else{
             tab--;
-            return " else "+this.instruccion.translate(tab);
+            return " else "+this.instruccion.translate(-tab);
         }
     }
 

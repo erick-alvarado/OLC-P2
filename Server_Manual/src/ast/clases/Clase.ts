@@ -20,7 +20,7 @@ export class Clase extends Instruccion {
 
     translate(tab:number) {
         tab = 1;
-        let cadena = "{\n";
+        let cadena = "\n";
         if(this.instrucciones!=null){
             if (this.instrucciones.length>0){
                 for (const ins of this.instrucciones) {
@@ -29,8 +29,8 @@ export class Clase extends Instruccion {
             }
         }
         
-        cadena+="\n}\n"
-        return "class "+this.id+cadena ;
+        cadena+="\n"
+        return "class "+this.id+":"+cadena ;
     }
     generarGrafo(g: ValorGrafo, padre: String) {
        

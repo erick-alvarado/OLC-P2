@@ -7,8 +7,27 @@ function AnalizarJava(entrada) {
     let codigo = `
 
     public class IdentificadorClase {
-        prueba = false+true*4;
-        
+        if ( a > 5 ){
+            int a;
+            if ( a > 5 ){
+                int b;
+                // Bloque de sentencias then
+                } else if (a < 5){
+                    int c;
+                // Bloque de sentencias else if
+                }else{
+                    int d;
+                // Bloque de sentencias else
+                }
+            } else if (a < 5){
+                int f;
+            // Bloque de sentencias else if
+            }else{
+                int k;
+            // Bloque de sentencias else
+            }
+
+            
     }
     `;
     let ast = Gramatica.parse(codigo);

@@ -6,6 +6,7 @@ export class For extends Instruccion {
     condicion: Instruccion;
     incremento: Instruccion;
     instrucciones: Array<Instruccion>;
+    simbolos = ['<','>',];
     /**
      * @class La instruccion While realiza n iteraciones, dependiendo de la condicion
      * @param line linea de la instruccion while
@@ -32,14 +33,24 @@ export class For extends Instruccion {
     translate(tab: number) {
         let tabu = this.tab(tab);
         tab++;
-        let cadena = "{\n";
+        let cadena = "\n";
         if (this.instrucciones.length>0){
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena+="\n"+tabu+"}\n"
-        return tabu+"for("+this.declaracion.translate(0).replace("\n","")+";"+this.condicion.translate(0)+";"+this.incremento.translate(0)+")"+cadena;
+        cadena+="\n"
+        
+        let dec = this.declaracion.translate(0).replace("\n","").replace(";","").split("=");
+
+        let cond = this.condicion.translate(0).replace("\n","").split(" ");
+        let n = 1;
+        let aux =""
+        while(n<cond.length){
+            aux +=cond[n]
+            n++;
+        }
+        return tabu+"for "+dec[0]+" in range ("+dec[1]+","+aux+"):"+cadena;
     }
 
     generarGrafo(g: ValorGrafo, padre: String) {

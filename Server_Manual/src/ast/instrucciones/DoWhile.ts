@@ -28,15 +28,17 @@ export class DoWhile extends Instruccion {
     translate(tab: number) {
         let tabu = this.tab(tab);
         tab++;
-        let cadena = "{\n";
+        let cadena = "\n";
         if (this.instrucciones.length>0){
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena+="\n"+tabu+"}"
+        cadena+="\n"
+        cadena+=tabu+"if "+this.condicion.translate(0)+":\n"+this.tab(tab)+"break\n"
+        
 
-        return tabu+"do"+cadena+"while("+this.condicion.translate(0)+");\n";
+        return tabu+"while True:\n"+cadena+"\n";
     }
 
     generarGrafo(g: ValorGrafo, padre: String) {

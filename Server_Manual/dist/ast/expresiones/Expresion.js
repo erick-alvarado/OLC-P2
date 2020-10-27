@@ -21,19 +21,19 @@ class Expresion extends Instruccion_1.Instruccion {
     translate(tab) {
         switch (this.tipoOperacion) {
             case Tipo_1.TypeOperation.MAYOR:
-                return ">" + this.operador1.translate(0) + this.operador2.translate(0);
+                return "> " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.MENOR:
-                return "<" + this.operador1.translate(0) + this.operador2.translate(0);
+                return "< " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.MAYOR_IGUAL:
-                return ">=" + this.operador1.translate(0) + this.operador2.translate(0);
+                return ">= " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.MENOR_IGUAL:
-                return "<=" + this.operador1.translate(0) + this.operador2.translate(0);
+                return "<= " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.IGUAL:
-                return "=" + this.operador1.translate(0) + this.operador2.translate(0);
+                return "= " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.IGUAL_IGUAL:
-                return "==" + this.operador1.translate(0) + this.operador2.translate(0);
+                return "== " + this.operador1.translate(0) + this.operador2.translate(0);
             case Tipo_1.TypeOperation.DISTINTO:
-                return "!=" + this.operador1.translate(0);
+                return "!= " + this.operador1.translate(0);
             case Tipo_1.TypeOperation.PARENTESIS:
                 return "(" + this.operador1.translate(0) + ")";
             case Tipo_1.TypeOperation.AND:

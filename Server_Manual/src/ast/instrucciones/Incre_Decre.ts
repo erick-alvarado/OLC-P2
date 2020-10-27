@@ -32,9 +32,9 @@ export class Incre_Decre extends Instruccion {
         
         switch(this.tipoOperacion){
             case TypeOperation.ADICION:
-                return tabu+""+this.identificador+"++;";
+                return tabu+""+this.identificador+"++\n";
             case TypeOperation.SUBSTRACCION:
-                return tabu+""+this.identificador+"--;";
+                return tabu+""+this.identificador+"--\n";
         }
         return "que pedo"
     }
@@ -65,11 +65,6 @@ export class Incre_Decre extends Instruccion {
             g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
             g.contador++;
         }
-        nombreHijo = "nodo"+g.contador;
-            g.grafo += "  "+nombreHijo +"[label=\";\"];\n";
-            g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
-            g.contador++;
-
 
         return null;
     }

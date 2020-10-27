@@ -43,7 +43,11 @@ export class Sentencia extends Instruccion {
         g.contador++;
         
         if(this.expresion!=null){
-            this.expresion.generarGrafo(g,padre);
+            nombreHijo = "nodo"+g.contador;
+            g.grafo += "  "+nombreHijo +"[label=\"EXPRESION\"];\n";
+            g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
+            g.contador++;
+            this.expresion.generarGrafo(g,nombreHijo);
         }
         nombreHijo = "nodo"+g.contador;
         g.grafo += "  "+nombreHijo +"[label=\";\"];\n";

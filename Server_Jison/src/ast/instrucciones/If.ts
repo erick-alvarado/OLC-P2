@@ -29,7 +29,18 @@ export class If extends Instruccion {
         return tabs;
     }
     translate(tab: number) {
-        let tabu = this.tab(tab);
+        let tabu2;
+        let tabu;
+        if(tab<0){
+            tabu2= ""
+            tab = tab*-1;
+            tabu = this.tab(tab);
+        }
+        else{
+            tabu = this.tab(tab);
+            tabu2=  tabu;
+        }
+
         tab++;
         let cadena = "{\n";
         if (this.instrucciones.length>0){
@@ -39,11 +50,11 @@ export class If extends Instruccion {
         }
         cadena+="\n"+tabu+"}";
         if(this.elso==null){
-            return tabu+"if("+this.condicion.translate(tab)+")"+cadena;
+            return tabu2+"if("+this.condicion.translate(tab)+")"+cadena;
         }
         else{
             tab--;
-            return tabu+"if("+this.condicion.translate(tab)+")"+cadena+this.elso.translate(tab);
+            return tabu2+"if("+this.condicion.translate(tab)+")"+cadena+this.elso.translate(tab);
             
         }
     }

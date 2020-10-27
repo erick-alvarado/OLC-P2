@@ -12,6 +12,7 @@ class For extends Instruccion_1.Instruccion {
      */
     constructor(declaracion, condicion, incremento, instrucciones, line, column) {
         super(line, column);
+        this.simbolos = ['<', '>',];
         this.declaracion = declaracion;
         this.condicion = condicion;
         this.incremento = incremento;
@@ -29,14 +30,22 @@ class For extends Instruccion_1.Instruccion {
     translate(tab) {
         let tabu = this.tab(tab);
         tab++;
-        let cadena = "{\n";
+        let cadena = "\n";
         if (this.instrucciones.length > 0) {
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena += "\n" + tabu + "}\n";
-        return tabu + "for(" + this.declaracion.translate(0).replace("\n", "") + ";" + this.condicion.translate(0) + ";" + this.incremento.translate(0) + ")" + cadena;
+        cadena += "\n";
+        let dec = this.declaracion.translate(0).replace("\n", "").replace(";", "").split("=");
+        let cond = this.condicion.translate(0).replace("\n", "").split(" ");
+        let n = 1;
+        let aux = "";
+        while (n < cond.length) {
+            aux += cond[n];
+            n++;
+        }
+        return tabu + "for " + dec[0] + " in range (" + dec[1] + "," + aux + "):" + cadena;
     }
     generarGrafo(g, padre) {
         let p = padre;

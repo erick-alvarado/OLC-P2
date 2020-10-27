@@ -18,14 +18,14 @@ class Main extends Instruccion_1.Instruccion {
     }
     translate(tab) {
         tab = 1;
-        let cadena = "{\n";
+        let cadena = "\n";
         if (this.instrucciones != null) {
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena += "\n}\n";
-        return "function main ()" + cadena;
+        cadena += "\n";
+        return "function main ():" + cadena;
     }
     generarGrafo(g, padre) {
         //----------- LISTA DE INSTRUCCIONES -----------

@@ -39,7 +39,7 @@ class Else extends Instruccion_1.Instruccion {
         }
         else {
             tab--;
-            return " else " + this.instruccion.translate(tab);
+            return " else " + this.instruccion.translate(-tab);
         }
     }
     generarGrafo(g, padre) {

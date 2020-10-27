@@ -19,15 +19,15 @@ export class Interface extends Instruccion {
     }
 
     translate(tab: number) {
-        let cadena = "{\n";
+        let cadena = "\n";
         tab = 1;
         if (this.instrucciones !=null){
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena+="\n}\n"
-        return "class "+this.id+cadena ;
+        cadena+="\n"
+        return "class "+this.id+":"+cadena ;
     }
     generarGrafo(g: ValorGrafo, padre: String) {
        

@@ -43,7 +43,7 @@ class Funcion_Clase extends Instruccion_1.Instruccion {
             }
         }
         cadena2 = cadena2.substr(0, cadena2.length - 2);
-        return tabu + "function " + this.id + "(" + cadena2 + ")" + "{\n" + cadena + tabu + "}\n";
+        return tabu + "self " + this.id + "(" + cadena2 + ")" + ":\n" + cadena + "\n";
     }
     generarGrafo(g, padre) {
         //----------- LISTA DE INSTRUCCIONES -----------

@@ -17,15 +17,15 @@ class Interface extends Instruccion_1.Instruccion {
         this.instrucciones = instrucciones;
     }
     translate(tab) {
-        let cadena = "{\n";
+        let cadena = "\n";
         tab = 1;
         if (this.instrucciones != null) {
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena += "\n}\n";
-        return "class " + this.id + cadena;
+        cadena += "\n";
+        return "class " + this.id + ":" + cadena;
     }
     generarGrafo(g, padre) {
         //----------- LISTA DE INSTRUCCIONES -----------

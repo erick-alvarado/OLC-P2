@@ -6,15 +6,34 @@ import { Sintactico } from "./Sintactico";
 export function AnalizarJava(entrada:string):String{
     
     let codigo = `
+    
     public class IdentificadorClase {
-        int contador = 0 ;
-    do{
-    contador ++;    
+        if ( a > 5 ){
+            int a;
+            if ( a > 5 ){
+                int b;
+                // Bloque de sentencias then
+                } else if (a < 5){
+                    int c;
+                // Bloque de sentencias else if
+                }else{
+                    int d;
+                // Bloque de sentencias else
+                }
+            } else if (a < 5){
+                int f;
+            // Bloque de sentencias else if
+            }else{
+                int k;
+            // Bloque de sentencias else
+            }
 
-    } while (contador!1+6<10);
-        
-        
+            
     }
+    
+        
+        
+    
         `;
 
     let lexico = new Lexico(codigo.toLowerCase());
@@ -37,8 +56,8 @@ export function AnalizarJava(entrada:string):String{
     console.log(ast.translate(0));
 
 
-    console.log("------------------- GRAFO -------------------\n");
-    console.log(txtDotAST);
+    //console.log("------------------- GRAFO -------------------\n");
+    //console.log(txtDotAST);
 
 
     return "exito";

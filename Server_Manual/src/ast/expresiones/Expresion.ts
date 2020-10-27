@@ -24,19 +24,19 @@ export class Expresion extends Instruccion {
     translate(tab: number) {
         switch(this.tipoOperacion){
             case TypeOperation.MAYOR:
-                return ">"+this.operador1.translate(0)+ this.operador2.translate(0);
+                return "> "+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.MENOR:
-                return "<"+this.operador1.translate(0)+ this.operador2.translate(0);
+                return "< "+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.MAYOR_IGUAL:
-                return ">="+ this.operador1.translate(0)+this.operador2.translate(0);
+                return ">= "+ this.operador1.translate(0)+this.operador2.translate(0);
             case TypeOperation.MENOR_IGUAL:
-                return"<="+ this.operador1.translate(0)+ this.operador2.translate(0);
+                return"<= "+ this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.IGUAL:
-                return "="+this.operador1.translate(0)+ this.operador2.translate(0);
+                return "= "+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.IGUAL_IGUAL:
-                return "=="+this.operador1.translate(0)+ this.operador2.translate(0);
+                return "== "+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.DISTINTO:
-                return "!="+this.operador1.translate(0);
+                return "!= "+this.operador1.translate(0);
             case TypeOperation.PARENTESIS:
                 return "("+this.operador1.translate(0)+")";
             case TypeOperation.AND:

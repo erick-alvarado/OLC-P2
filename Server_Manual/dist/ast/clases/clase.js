@@ -18,7 +18,7 @@ class Clase extends Instruccion_1.Instruccion {
     }
     translate(tab) {
         tab = 1;
-        let cadena = "{\n";
+        let cadena = "\n";
         if (this.instrucciones != null) {
             if (this.instrucciones.length > 0) {
                 for (const ins of this.instrucciones) {
@@ -26,8 +26,8 @@ class Clase extends Instruccion_1.Instruccion {
                 }
             }
         }
-        cadena += "\n}\n";
-        return "class " + this.id + cadena;
+        cadena += "\n";
+        return "class " + this.id + ":" + cadena;
     }
     generarGrafo(g, padre) {
         //----------- LISTA DE INSTRUCCIONES -----------

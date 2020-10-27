@@ -36,7 +36,7 @@ class Funcion_Interface extends Instruccion_1.Instruccion {
             }
         }
         cadena2 = cadena2.substr(0, cadena2.length - 2);
-        return tabu + "function " + this.id + "(" + cadena2 + ")" + "{\n" + tabu + "}\n";
+        return tabu + "self " + this.id + "(" + cadena2 + ")" + ":\n";
     }
     generarGrafo(g, padre) {
         //----------- LISTA DE INSTRUCCIONES -----------

@@ -30,9 +30,9 @@ class Incre_Decre extends Instruccion_1.Instruccion {
         let tabu = this.tab(tab);
         switch (this.tipoOperacion) {
             case Tipo_1.TypeOperation.ADICION:
-                return tabu + "" + this.identificador + "++;";
+                return tabu + "" + this.identificador + "++\n";
             case Tipo_1.TypeOperation.SUBSTRACCION:
-                return tabu + "" + this.identificador + "--;";
+                return tabu + "" + this.identificador + "--\n";
         }
         return "que pedo";
     }
@@ -60,10 +60,6 @@ class Incre_Decre extends Instruccion_1.Instruccion {
             g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
             g.contador++;
         }
-        nombreHijo = "nodo" + g.contador;
-        g.grafo += "  " + nombreHijo + "[label=\";\"];\n";
-        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-        g.contador++;
         return null;
     }
     getNombreHijo() {

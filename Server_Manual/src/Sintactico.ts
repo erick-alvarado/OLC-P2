@@ -93,9 +93,11 @@ export class Sintactico{
                     switch(this.Tokens[this.n+1].tipo){
                         case 'mas_mas':
                             instrucciones.push(this.Incremento_Decremento());
+                             this.match(this.Tokens[this.n],'pcoma'); 
                             break;
                         case 'menos_menos':
                             instrucciones.push(this.Incremento_Decremento());
+                            this.match(this.Tokens[this.n],'pcoma'); 
                             break;
                         case 'igual':
                             instrucciones.push(this.Asignacion());
@@ -133,16 +135,29 @@ export class Sintactico{
                     instrucciones.push(this.Do());
                     break;
                 case 'for_':
+                    instrucciones.push(this.For());
                     break;
                 case 'if_':
+                    instrucciones.push(this.If());
                     break;
                 case 'system_':
+                    instrucciones.push(this.Print());
                     break;
                 case 'break_':
+                    this.match(this.Tokens[this.n],'break_');
+                    this.match(this.Tokens[this.n],'pcoma'); 
+                    instrucciones.push(new Sentencia(this.Tokens[this.n-2].descripcion,null,0,0))
                     break;
                 case 'continue_':
+                    this.match(this.Tokens[this.n],'continue_');
+                    this.match(this.Tokens[this.n],'pcoma'); 
+                    instrucciones.push(new Sentencia(this.Tokens[this.n-2].descripcion,null,0,0))
                     break;
                 case 'return_':
+                    this.match(this.Tokens[this.n],'return_');
+                    let exp = this.E();
+                    this.match(this.Tokens[this.n],'pcoma'); 
+                    instrucciones.push(new Sentencia("return",exp,0,0))
                     break;
                 default:
                     this.match(this.Tokens[this.n],'llaveCierra'); 
@@ -156,7 +171,78 @@ export class Sintactico{
 
     Whil():Instruccion{
         let i ;
+        return i;
+    }
+    Print():Instruccion{
+        let i ;
+        this.match(this.Tokens[this.n],'system_'); 
+        this.match(this.Tokens[this.n],'punto');
+        this.match(this.Tokens[this.n],'out_');
+        this.match(this.Tokens[this.n],'punto'); 
+        if(this.Tokens[this.n].tipo=='print_'){
+            this.match(this.Tokens[this.n],'print_');  
+        }
+        else if(this.Tokens[this.n].tipo=='println_'){
+            this.match(this.Tokens[this.n],'println_');  
+        }
+        else{
+            this.match(this.Tokens[this.n],'println o print');
+        }
+        this.match(this.Tokens[this.n],'parAbre');
+        let exp = this.E();
+        this.match(this.Tokens[this.n],'parCierra');
+        this.match(this.Tokens[this.n],'pcoma');
 
+        i = new Print(exp,0,0);
+        return i;
+    }
+
+    If():Instruccion{
+        let i ;
+        let els = null;
+        let bloque  = null;
+        this.match(this.Tokens[this.n],'if_');
+        this.match(this.Tokens[this.n],'parAbre');
+        let exp = this.E();
+        this.match(this.Tokens[this.n],'parCierra');
+        bloque = this.Bloque_Sentencias();
+
+        if(this.Tokens[this.n].tipo=='else_'){
+            els = this.Else();
+        }
+        i = new If(exp,bloque,els,0,0);
+
+        return i;
+    }
+
+    Else():Instruccion{
+        let i ;
+        let iff = null;
+        let bloque = null;
+        this.match(this.Tokens[this.n],'else_');
+        if(this.Tokens[this.n].tipo=='if_'){
+            iff = this.If();
+        }
+        else{
+            bloque = this.Bloque_Sentencias();
+        }
+        i = new Else(iff,bloque,0,0);
+        return i;
+    }
+
+    
+    For():Instruccion{
+        let i ;
+        this.match(this.Tokens[this.n],'for_');
+        this.match(this.Tokens[this.n],'parAbre');
+        let decla = this.Declaracion();
+        let exp = this.E();
+        this.match(this.Tokens[this.n],'pcoma'); 
+        let exp2 = this.E();
+        this.match(this.Tokens[this.n],'parCierra');
+        let bloque = this.Bloque_Sentencias(); 
+
+        i = new For(decla,exp,exp2,bloque,0,0);
         return i;
     }
     Do():Instruccion{
@@ -346,7 +432,6 @@ export class Sintactico{
             this.match(this.Tokens[this.n],'menos_menos');
 
         }
-        this.match(this.Tokens[this.n],'pcoma');
         return i;
     }
     Llamada(): Instruccion{
@@ -394,8 +479,13 @@ export class Sintactico{
                 this.match(this.Tokens[this.n],'false_');
                 break;
             case 'identificador':
-                i = new Primitivo(this.Tokens[this.n].descripcion);
-                this.match(this.Tokens[this.n],'identificador');
+                if(this.Tokens[this.n+1].tipo=="mas_mas"||this.Tokens[this.n+1].tipo=="menos_menos"){
+                    i = this.Incremento_Decremento();
+                }
+                else{
+                    i = new Primitivo(this.Tokens[this.n].descripcion);
+                    this.match(this.Tokens[this.n],'identificador');
+                }
                 break;
             default:
                 i = new Primitivo("ERROR");

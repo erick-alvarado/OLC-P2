@@ -30,19 +30,19 @@ export class Else extends Instruccion {
         let tabu = this.tab(tab);
         tab++;
         if(this.instruccion==null){
-            let cadena = "{\n";
+            let cadena = "\n";
             if (this.instrucciones.length>0){
                 for (const ins of this.instrucciones) {
                     cadena += ins.translate(tab);
                 }
             }
-            cadena+="\n"+tabu+"}";
+            cadena+="\n";
 
-            return " else "+cadena;
+            return tabu+" else:"+cadena;
         }
         else{
             tab--;
-            return " else "+this.instruccion.translate(tab);
+            return tabu+" el"+this.instruccion.translate(-tab);
         }
     }
 

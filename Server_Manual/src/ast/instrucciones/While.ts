@@ -28,18 +28,18 @@ export class While extends Instruccion {
     translate(tab: number) {
         let tabu = this.tab(tab);
         tab++;
-        let cadena = "{\n";
+        let cadena = "\n";
         if (this.instrucciones.length>0){
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena+="\n"+tabu+"}\n"
+        cadena+="\n"
         
         let cadena2 = this.condicion.translate(0);
 
 
-        return tabu+"while("+cadena2+")"+cadena;
+        return tabu+"while "+cadena2+":"+cadena;
     }
 
     generarGrafo(g: ValorGrafo, padre: String) {

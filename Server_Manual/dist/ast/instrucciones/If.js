@@ -26,21 +26,31 @@ class If extends Instruccion_1.Instruccion {
         return tabs;
     }
     translate(tab) {
-        let tabu = this.tab(tab);
+        let tabu2;
+        let tabu;
+        if (tab < 0) {
+            tabu2 = "";
+            tab = tab * -1;
+            tabu = this.tab(tab);
+        }
+        else {
+            tabu = this.tab(tab);
+            tabu2 = tabu;
+        }
         tab++;
-        let cadena = "{\n";
+        let cadena = "\n";
         if (this.instrucciones.length > 0) {
             for (const ins of this.instrucciones) {
                 cadena += ins.translate(tab);
             }
         }
-        cadena += "\n" + tabu + "}";
+        cadena += "\n";
         if (this.elso == null) {
-            return tabu + "if(" + this.condicion.translate(tab) + ")" + cadena;
+            return tabu2 + "if " + this.condicion.translate(tab) + ":\n" + cadena;
         }
         else {
             tab--;
-            return tabu + "if(" + this.condicion.translate(tab) + ")" + cadena + this.elso.translate(tab);
+            return tabu2 + "if " + this.condicion.translate(tab) + ":\n" + cadena + this.elso.translate(tab);
         }
     }
     generarGrafo(g, padre) {
