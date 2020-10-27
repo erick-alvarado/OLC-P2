@@ -24,44 +24,52 @@ export class Expresion extends Instruccion {
     translate(tab: number) {
         switch(this.tipoOperacion){
             case TypeOperation.MAYOR:
-                return this.operador1.translate(0)+" > "+ this.operador2.translate(0);
+                return ">"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.MENOR:
-                return this.operador1.translate(0)+" < "+ this.operador2.translate(0);
+                return "<"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.MAYOR_IGUAL:
-                return this.operador1.translate(0)+" >= "+ this.operador2.translate(0);
+                return ">="+ this.operador1.translate(0)+this.operador2.translate(0);
             case TypeOperation.MENOR_IGUAL:
-                return this.operador1.translate(0)+" <= "+ this.operador2.translate(0);
+                return"<="+ this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.IGUAL:
-                return this.operador1.translate(0)+" = "+ this.operador2.translate(0);
+                return "="+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.IGUAL_IGUAL:
-                return this.operador1.translate(0)+" == "+ this.operador2.translate(0);
+                return "=="+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.DISTINTO:
                 return "!="+this.operador1.translate(0);
             case TypeOperation.PARENTESIS:
                 return "("+this.operador1.translate(0)+")";
             case TypeOperation.AND:
-                return this.operador1.translate(0)+" && "+ this.operador2.translate(0);
+                return "&&"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.OR:
-                return this.operador1.translate(0)+" || "+ this.operador2.translate(0);
+                return "||"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.NOT:
                 return "!"+ this.operador1.translate(0);
             case TypeOperation.XOR:
-                return this.operador1.translate(0)+" ^ "+ this.operador2.translate(0);
+                return "^"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.SUMA:
-                return this.operador1.translate(0)+" + "+ this.operador2.translate(0);
+                return "+"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.RESTA:
-                return this.operador1.translate(0)+" - "+ this.operador2.translate(0);
+                return "-"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.MULTIPLICACION:
-                return this.operador1.translate(0)+" * "+ this.operador2.translate(0);
+                return "*"+this.operador1.translate(0)+ this.operador2.translate(0);
             case TypeOperation.DIVISION:
-                return this.operador1.translate(0)+" / "+ this.operador2.translate(0);
+                return "/"+this.operador1.translate(0)+ this.operador2.translate(0);
             
             case TypeOperation.MENOSUNARIO:
                 return "-"+this.operador1.translate(0);
             case TypeOperation.PARENTESIS:
                 return "("+this.operador1.translate(0)+")";
             default:
-                return "";
+                let a =""
+                let b="";
+                if(this.operador1!=null){
+                    a=""+this.operador1.translate(0)
+                }
+                if(this.operador2!=null){
+                    b=""+this.operador2.translate(0)
+                }
+                return  a+b;
         }
         return "";
     }
@@ -109,6 +117,7 @@ export class Expresion extends Instruccion {
             case TypeOperation.MENOR_IGUAL:       {return "MENOR_IGUAL";}
             case TypeOperation.MAYOR_IGUAL:       {return "MAYOR_IGUAL";}
             case TypeOperation.IGUAL:       {return "IGUAL";}
+            case TypeOperation.DISTINTO:       {return "DISTINTO";}
             case TypeOperation.IGUAL_IGUAL:       {return "IGUAL_IGUAL";}
             case TypeOperation.AND: { return "AND"; }
             case TypeOperation.OR: { return "OR"; }

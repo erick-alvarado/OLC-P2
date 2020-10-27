@@ -34,12 +34,7 @@ class While extends Instruccion_1.Instruccion {
             }
         }
         cadena += "\n" + tabu + "}\n";
-        let cadena2 = "";
-        if (this.condicion.length > 0) {
-            for (const ins of this.condicion) {
-                cadena2 += ins.translate(0);
-            }
-        }
+        let cadena2 = this.condicion.translate(0);
         return tabu + "while(" + cadena2 + ")" + cadena;
     }
     generarGrafo(g, padre) {
@@ -54,14 +49,11 @@ class While extends Instruccion_1.Instruccion {
         g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
         g.contador++;
         padre = nombreHijo;
-        for (let x = 0; x < this.condicion.length; x++) {
-            let inst = this.condicion[x];
-            nombreHijo = "nodo" + g.contador;
-            g.grafo += "  " + nombreHijo + "[label=\"" + inst.getNombreHijo() + "\"];\n";
-            g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
-            g.contador++;
-            inst.generarGrafo(g, nombreHijo);
-        }
+        nombreHijo = "nodo" + g.contador;
+        g.grafo += "  " + nombreHijo + "[label=\"" + this.condicion.getNombreHijo() + "\"];\n";
+        g.grafo += "  " + padre + " -> " + nombreHijo + ";\n";
+        g.contador++;
+        this.condicion.generarGrafo(g, nombreHijo);
         padre = p;
         nombreHijo = "nodo" + g.contador;
         g.grafo += "  " + nombreHijo + "[label=\")\"];\n";

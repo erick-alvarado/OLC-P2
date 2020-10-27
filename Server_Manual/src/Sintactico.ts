@@ -179,6 +179,7 @@ export class Sintactico{
         this.match(this.Tokens[this.n],'while_'); 
         this.match(this.Tokens[this.n],'parAbre'); 
         let exp = this.E();
+        
         this.match(this.Tokens[this.n],'parCierra');
         let bloque = this.Bloque_Sentencias();
         i = new While(exp,bloque,0,0);
