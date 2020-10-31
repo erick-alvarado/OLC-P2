@@ -1,3 +1,5 @@
+var jsPDF = require('jspdf.min.js');
+require('jspdf-autotable');
 //Variables 1: con jison (js)   ;     Variables 2: a patita (py)
 var listaErrores1;
 var listaErrores2;
@@ -10,6 +12,56 @@ var grafica2;
 
 var traduccion1;
 var traduccion2;
+
+
+function pdfErrores(){
+  var doc = new jsPDF();
+  
+  var col = ["TIPO","FILA","COLUMNA","DESCRIPCION",];
+  var rows = [];
+  /* The following array of object as response from the API req  */
+  var itemNew = listaErrores1;
+
+  itemNew.forEach(e => {      
+    var temp = [e.tipo,e.fila, e.columna,e.descripcion];
+    rows.push(temp);
+  });        
+  doc.autoTable(col, rows, {
+    startY: 10,
+    theme: 'grid',
+    tableWidth: 'auto',
+    columnWidth: 'wrap',
+    showHeader: 'everyPage',
+    tableLineColor: 200,
+    tableLineWidth: 0,
+    columnStyles: {
+        0: {
+            columnWidth: 30
+        },
+        1: {
+            columnWidth: 30
+        },
+        2: {
+            columnWidth: 30
+        },
+        3: {
+            columnWidth: 70
+        }
+    },
+    headerStyles: {
+        theme: 'grid'
+    },
+    styles: {
+        overflow: 'linebreak',
+        columnWidth: 'wrap',
+        font: 'arial',
+        fontSize: 10,
+        cellPadding: 8,
+        overflowColumns: 'linebreak'
+    },
+});
+  doc.save('Test.pdf');
+}
 
 function Analizar(){
   console.log("------------Datos de envio en js-------------")
@@ -71,3 +123,4 @@ function Analizar(){
     let con = ace.edit("Console"); 
     con.setValue(errcons);
   }
+
