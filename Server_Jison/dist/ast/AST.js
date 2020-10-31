@@ -33,19 +33,19 @@ class AST extends Instruccion_1.Instruccion {
         }
         //----------------------------------------------
     }
-    getlistaErrores() {
-        let cadena = "";
+    getListaErrores() {
+        let c = [];
         for (let a = 0; a < this.listaError.length; a++) {
-            cadena += this.listaError[a] + "\n";
+            c.push({ 'tipo': this.listaError[a].tipo, 'fila': this.listaError[a].fila, 'columna': this.listaError[a].columna, 'descripcion': this.listaError[a].descripcion });
         }
-        return cadena;
+        return c;
     }
-    getlistaTokens() {
-        let cadena = "";
+    getListaTokens() {
+        let c = [];
         for (let a = 0; a < this.listaToken.length; a++) {
-            cadena += this.listaToken[a].descripcion + "\n";
+            c.push({ 'fila': this.listaToken[a].fila, 'columna': this.listaToken[a].columna, 'tipo': this.listaToken[a].tipo, 'descripcion': this.listaToken[a].descripcion });
         }
-        return cadena;
+        return c;
     }
     addError(pta) {
         console.log(pta);

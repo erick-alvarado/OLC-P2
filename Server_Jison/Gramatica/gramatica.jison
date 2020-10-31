@@ -119,7 +119,7 @@
 \n					{}
 <<EOF>>				return 'EOF';
 .	{ 
-		root.addError(new Error_("LEXICO",yylloc.first_line, yylloc.first_column, "El caracter: \''" +yytext+"\'' no pertenece al lenguaje"));
+		root.addError(new Error_("LEXICO",yylloc.first_line, yylloc.first_column, "El caracter: ' " +yytext+" ' no pertenece al lenguaje"));
 
 	}
 
@@ -147,7 +147,9 @@
 %% 
 INI : CLASES EOF {
 		root.setInstruccion($1);
-		return root; 
+		let aux = root
+		root = new AST(null, [] , [] );
+		return aux; 
 	}
 	;
 CLASES :
@@ -157,10 +159,8 @@ CLASES :
 	  }
 	| CLASE {
 		$$ = [$1];
+	
 	}
-	
-	
-	
 	;
 
 CLASE: public_ class_ identificador BLOQUE_SENTENCIAS { $$= new Clase($3,$4, this._$.first_line, this._$.first_column); }

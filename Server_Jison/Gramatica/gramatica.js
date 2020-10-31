@@ -86,7 +86,9 @@ switch (yystate) {
 case 1:
 
 		root.setInstruccion($$[$0-1]);
-		return root; 
+		let aux = root
+		root = new AST(null, [] , [] );
+		return aux; 
 	
 break;
 case 2: case 8:
@@ -95,9 +97,10 @@ case 2: case 8:
 		this.$ = $$[$0-1];
 	  
 break;
-case 3: case 9: case 33: case 78:
+case 3:
 
 		this.$ = [$$[$0]];
+	
 	
 break;
 case 4:
@@ -114,6 +117,11 @@ case 7:
 				root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));
 				
 			
+break;
+case 9: case 33: case 78:
+
+		this.$ = [$$[$0]];
+	
 break;
 case 10:
  this.$ = $$[$0];
@@ -1019,7 +1027,7 @@ break;
 case 61:return 5;
 break;
 case 62: 
-		root.addError(new Error_("LEXICO",yy_.yylloc.first_line, yy_.yylloc.first_column, "El caracter: \''" +yy_.yytext+"\'' no pertenece al lenguaje"));
+		root.addError(new Error_("LEXICO",yy_.yylloc.first_line, yy_.yylloc.first_column, "El caracter: ' " +yy_.yytext+" ' no pertenece al lenguaje"));
 
 	
 break;

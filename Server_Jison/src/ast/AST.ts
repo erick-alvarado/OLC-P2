@@ -42,20 +42,23 @@ export class AST extends Instruccion {
         //----------------------------------------------
     }
 
-    getlistaErrores():String{
-        let cadena = "";
+    getListaErrores():string[]{
+        let c = []
         for(let a = 0;a < this.listaError.length; a++){
-            cadena += this.listaError[a] +"\n";
+            c.push({'tipo': this.listaError[a].tipo ,'fila': this.listaError[a].fila ,'columna': this.listaError[a].columna,'descripcion': this.listaError[a].descripcion});
         }
-        return cadena;
+        return c;
     }
-    getlistaTokens():String{
-        let cadena = "";
+
+
+    getListaTokens():string[]{
+        let c = []
         for(let a = 0;a < this.listaToken.length; a++){
-            cadena += this.listaToken[a].descripcion +"\n";
+            c.push({'fila': this.listaToken[a].fila ,'columna': this.listaToken[a].columna,'tipo': this.listaToken[a].tipo ,'descripcion': this.listaToken[a].descripcion});
         }
-        return cadena;
+        return c;
     }
+
     addError(pta : Error_){
         console.log(pta);
         this.listaError.push(pta);

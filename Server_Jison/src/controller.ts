@@ -1,17 +1,20 @@
 import { Request, Response } from "express";
-import { AnalizarJava } from './Analisis';
+import { AnalizarJava, getGrafo, getListaErrores, getTraduccion } from './Analisis';
 
 export let analizar = (req:Request, res: Response) => {
     //console.log("query: ",req.query.codigo)
-    let codigo:string = req.query.codigo;
-    //let respuesta = codigo;
-    let respuesta = AnalizarJava(codigo);
-    //console.log(respuesta);
-    //console.log("params: ",req.params)
-    let a = [{'analisis': respuesta}, {'grafo': 'reporteAST'}, {'errores': 'reporteErrores'}]
-    res.send(a);
-    
-    
+    let codigo:string = req.body.codigo.toString();
+    console.log(codigo)
+    let tokens = AnalizarJava(codigo);
+    let errores = getListaErrores();
+    let grafo="";
+    let traduccion="";
+    if(errores.length==0){
+        grafo = getGrafo();
+        traduccion= getTraduccion();
+    }
+    let a = [{'tokens': tokens},{'errores': errores}, {'grafo': grafo}, {'traduccion': traduccion}]
+    res.send(JSON.stringify(a));
 }
 
 export let miAuxiliar = (req:Request, res: Response) => {
