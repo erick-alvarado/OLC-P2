@@ -28,6 +28,8 @@ func getTraduccion(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("\n-----------Codigo recibido en golang-----------")
 	fmt.Println(c.Codigo)
 	c.Codigo = strings.Replace(c.Codigo, "\"", "\\\"", -1)
+	c.Codigo = strings.Replace(c.Codigo, "\n", "\\\n", -1)
+
 	var jsonStr = []byte(`{"codigo":"` + c.Codigo + `"}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")

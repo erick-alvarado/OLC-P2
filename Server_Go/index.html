@@ -27,7 +27,9 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarColor03">
-      <button onclick="pdfErrores()" type="button" class="btn btn-secondary">Secondary</button>
+      <button onclick="reporteErrores()" type="button" class="btn btn-secondary">Errores</button>
+      <button onclick="reporteTokens()" type="button" class="btn btn-secondary">Tokens</button>
+      <button onclick="reporteGrafica()" type="button" class="btn btn-secondary">Graficar</button>
       <button onclick="Analizar()" type="button" class="btn btn-outline-secondary">Traducir</button>
     
   </div>
@@ -37,7 +39,7 @@
     <!-- CONSOLA DE ENTRADA -->
     <br>
     <h4>Entrada:</h4>
-    <div id="Editor" style="height: 300px;">
+    <div id="Editor" style="height: 300px; white-space:pre-wrap;">
         Evaluar[(5+5*5)];
         Evaluar[(2+5*10/2)];
     </div>
@@ -52,7 +54,17 @@
         <h4>Console MANUAL:</h4>
         <div id="Console2" style="height: 200px; width: 730px; float: right;"> </div>
     </div>
-    
+    <br>
+    <div style="float: left;"> 
+        <h4>Grafica JISON:</h4>
+        <div id="graph1" style="width: 730px;"></div>
+    </div>
+    <br>
+    <div style="float: left;"> 
+        <h4>Grafica MANUAL:</h4>
+    </div>
+
+
     <script type="text/javascript">
         var editor = ace.edit("Editor");
         //Agregando formato de C# al editor
@@ -68,19 +80,24 @@
 
     </script>
 
-
-
+    
+    
     <!-- 
     Se deben importar todos los archivos .js
     para que se puedan usar en cualquier archivo .js
     es como una declaracion global de cada uno de ellos 
+   
+    
 -->
+
     <script src="./js/main.js"></script>
     <script src="./js/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.debug.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.0.28/jspdf.plugin.autotable.js"></script>
-
-
+ <script src="//d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+    <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+    
 </body>
 
 </html>

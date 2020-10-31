@@ -71,7 +71,10 @@ export class DoWhile extends Instruccion {
         g.grafo += "  "+nombreHijo +"[label=\"}\"];\n";
         g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
         g.contador++;
-        
+        nombreHijo = "nodo"+g.contador;
+        g.grafo += "  "+nombreHijo +"[label=\"while\"];\n";
+        g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
+        g.contador++;
         nombreHijo = "nodo"+g.contador;
         g.grafo += "  "+nombreHijo +"[label=\"(\"];\n";
         g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";

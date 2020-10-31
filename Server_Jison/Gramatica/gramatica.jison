@@ -161,15 +161,16 @@ CLASES :
 		$$ = [$1];
 	
 	}
+	| error {  
+				root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));
+				
+			}
 	;
 
 CLASE: public_ class_ identificador BLOQUE_SENTENCIAS { $$= new Clase($3,$4, this._$.first_line, this._$.first_column); }
 	| public_ interface_ identificador BLOQUE_SENTENCIAS { $$= new Interface($3,$4, this._$.first_line, this._$.first_column); }
 	| public_ static_ void_ main_ parAbre string_ corchetes args_ parCierra BLOQUE_SENTENCIAS { $$= new Main(null,$10, this._$.first_line, this._$.first_column); }
-	| error {  
-				root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));
-				
-			}
+	
 	;
 
 
@@ -208,11 +209,11 @@ INCRE_DECRE: identificador mas_mas 			{ $$ = new Incre_Decre( $1,TypeOperation.A
 	| identificador menos_menos  		{ $$ = new Incre_Decre( $1,TypeOperation.SUBSTRACCION,  this._$.first_line, this._$.first_column); }
 	;
 
-FUNCION_CLASE: public_ void_ identificador parAbre PARAMETROS parCierra BLOQUE_SENTENCIAS { $$= new Funcion_Clase($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
-	| public_ TIPO identificador parAbre PARAMETROS parCierra BLOQUE_SENTENCIAS { $$= new Funcion_Clase($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
+FUNCION_CLASE:  public_ TIPO identificador parAbre PARAMETROS parCierra BLOQUE_SENTENCIAS { $$= new Funcion_Clase($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
+	| public_ void_ identificador parAbre PARAMETROS parCierra BLOQUE_SENTENCIAS { $$= new Funcion_Clase($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
 	;
-FUNCION_INTERFACE: public_ void_ identificador parAbre PARAMETROS parCierra pcoma { $$= new Funcion_Interface($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
-	| public_ TIPO identificador parAbre PARAMETROS parCierra pcoma { $$= new Funcion_Interface($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
+FUNCION_INTERFACE:  public_ TIPO identificador parAbre PARAMETROS parCierra pcoma { $$= new Funcion_Interface($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
+	| public_ void_ identificador parAbre PARAMETROS parCierra pcoma { $$= new Funcion_Interface($2, $3, $5,$7, this._$.first_line, this._$.first_column); }
 	;
 
 BLOQUE_SENTENCIAS : llaveAbre llaveCierra { $$ = new ParaQueNoTruene( this._$.first_line, this._$.first_column); } 
