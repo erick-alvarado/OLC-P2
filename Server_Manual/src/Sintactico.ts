@@ -67,13 +67,13 @@ export class Sintactico{
                         this.Instrucciones.push(new Main(this.Tokens[this.n-1].descripcion,this.Bloque_Sentencias(),0,0));
                         break;
                     default:
-                        this.match(this.Tokens[this.n],'ERROR');
+                        this.match(this.Tokens[this.n],'class/interface/static');
                         break;    
                     
                 }
             }
             else{
-                this.match(this.Tokens[this.n],'ERROR');
+                this.match(this.Tokens[this.n],'public');
 
             }
         }
@@ -106,7 +106,7 @@ export class Sintactico{
                             instrucciones.push(this.Llamada());
                             break;
                         default:
-                            this.match(this.Tokens[this.n],'ERROR');
+                            this.match(this.Tokens[this.n],'mas_mas/menos_menos/igual/parAbre');
                             break;
                     }
                     break;
@@ -293,7 +293,7 @@ export class Sintactico{
         }
         else{
             i = new Primitivo("ERROR");
-            this.match(this.Tokens[this.n],'ERROR');
+            this.match(this.Tokens[this.n],'pcoma/llaveAbre');
         }
         return i
     }
@@ -341,7 +341,7 @@ export class Sintactico{
                 }
                 else{
                     i = new Primitivo("ERROR");
-                    this.match(this.Tokens[this.n],'ERROR');
+                    this.match(this.Tokens[this.n],'pcoma/coma');
                     return i;
                 }
                 this.match(this.Tokens[this.n],'pcoma');
@@ -357,6 +357,7 @@ export class Sintactico{
         switch(this.Tokens[this.n].tipo){
             case 'pcoma':
                 i = new Declaracion(Type.COMA,id,null,null,0,0);
+                this.n--;
                 break;
             case 'coma':
                 this.match(this.Tokens[this.n],'coma');
@@ -367,6 +368,7 @@ export class Sintactico{
                 let exp = this.E();
                 if(this.Tokens[this.n].tipo=='pcoma'){
                     i = new Declaracion(Type.COMA,id,exp,null,0,0);
+                    this.n--;
                 }
                 else if(this.Tokens[this.n].tipo=='coma'){
                     this.match(this.Tokens[this.n],'coma');
@@ -374,7 +376,7 @@ export class Sintactico{
                 }
                 else{
                     i = new Primitivo("ERROR");
-                    this.match(this.Tokens[this.n],'ERROR');
+                    this.match(this.Tokens[this.n],'pcoma/coma');
                     return i;
                 }
                 break;
@@ -396,24 +398,22 @@ export class Sintactico{
                 this.match(this.Tokens[this.n],'boolean_');
                 i = Type.BOOLEAN;
                 break;
-            case 'void_':
-                this.match(this.Tokens[this.n],'void_');
-                i = Type.VOID;
-                break;
             case 'double_':
                 this.match(this.Tokens[this.n],'double_');
                 i = Type.DOUBLE;
                 break;
+            case 'void_':
+                    this.match(this.Tokens[this.n],'void_');
+                    i = Type.VOID;
+                    break;
             case 'char_':
                 this.match(this.Tokens[this.n],'char_');
                 i = Type.CHAR;
                 break;
             default:
                 i = new Primitivo("ERROR");
-                this.match(this.Tokens[this.n],'ERROR');
+                this.match(this.Tokens[this.n],'numeric/string/boolean/double/char');
                 return i;
-                break;
-            
         }
         return i;
     }
@@ -493,7 +493,7 @@ export class Sintactico{
                 break;
             default:
                 i = new Primitivo("ERROR");
-                this.match(this.Tokens[this.n],'ERROR');
+                this.match(this.Tokens[this.n],'decimal/entero/caracter/cadena/true/false/identificador');
                 return i;
                 break;
         }

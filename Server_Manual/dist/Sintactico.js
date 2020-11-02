@@ -58,12 +58,12 @@ class Sintactico {
                         this.Instrucciones.push(new Main_1.Main(this.Tokens[this.n - 1].descripcion, this.Bloque_Sentencias(), 0, 0));
                         break;
                     default:
-                        this.match(this.Tokens[this.n], 'ERROR');
+                        this.match(this.Tokens[this.n], 'class/interface/static');
                         break;
                 }
             }
             else {
-                this.match(this.Tokens[this.n], 'ERROR');
+                this.match(this.Tokens[this.n], 'public');
             }
         }
     }
@@ -93,7 +93,7 @@ class Sintactico {
                             instrucciones.push(this.Llamada());
                             break;
                         default:
-                            this.match(this.Tokens[this.n], 'ERROR');
+                            this.match(this.Tokens[this.n], 'mas_mas/menos_menos/igual/parAbre');
                             break;
                     }
                     break;
@@ -265,7 +265,7 @@ class Sintactico {
         }
         else {
             i = new Primitivo_1.Primitivo("ERROR");
-            this.match(this.Tokens[this.n], 'ERROR');
+            this.match(this.Tokens[this.n], 'pcoma/llaveAbre');
         }
         return i;
     }
@@ -312,7 +312,7 @@ class Sintactico {
                 }
                 else {
                     i = new Primitivo_1.Primitivo("ERROR");
-                    this.match(this.Tokens[this.n], 'ERROR');
+                    this.match(this.Tokens[this.n], 'pcoma/coma');
                     return i;
                 }
                 this.match(this.Tokens[this.n], 'pcoma');
@@ -327,6 +327,7 @@ class Sintactico {
         switch (this.Tokens[this.n].tipo) {
             case 'pcoma':
                 i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, id, null, null, 0, 0);
+                this.n--;
                 break;
             case 'coma':
                 this.match(this.Tokens[this.n], 'coma');
@@ -337,6 +338,7 @@ class Sintactico {
                 let exp = this.E();
                 if (this.Tokens[this.n].tipo == 'pcoma') {
                     i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, id, exp, null, 0, 0);
+                    this.n--;
                 }
                 else if (this.Tokens[this.n].tipo == 'coma') {
                     this.match(this.Tokens[this.n], 'coma');
@@ -344,7 +346,7 @@ class Sintactico {
                 }
                 else {
                     i = new Primitivo_1.Primitivo("ERROR");
-                    this.match(this.Tokens[this.n], 'ERROR');
+                    this.match(this.Tokens[this.n], 'pcoma/coma');
                     return i;
                 }
                 break;
@@ -366,13 +368,13 @@ class Sintactico {
                 this.match(this.Tokens[this.n], 'boolean_');
                 i = Tipo_1.Type.BOOLEAN;
                 break;
-            case 'void_':
-                this.match(this.Tokens[this.n], 'void_');
-                i = Tipo_1.Type.VOID;
-                break;
             case 'double_':
                 this.match(this.Tokens[this.n], 'double_');
                 i = Tipo_1.Type.DOUBLE;
+                break;
+            case 'void_':
+                this.match(this.Tokens[this.n], 'void_');
+                i = Tipo_1.Type.VOID;
                 break;
             case 'char_':
                 this.match(this.Tokens[this.n], 'char_');
@@ -380,9 +382,8 @@ class Sintactico {
                 break;
             default:
                 i = new Primitivo_1.Primitivo("ERROR");
-                this.match(this.Tokens[this.n], 'ERROR');
+                this.match(this.Tokens[this.n], 'numeric/string/boolean/double/char');
                 return i;
-                break;
         }
         return i;
     }
@@ -461,7 +462,7 @@ class Sintactico {
                 break;
             default:
                 i = new Primitivo_1.Primitivo("ERROR");
-                this.match(this.Tokens[this.n], 'ERROR');
+                this.match(this.Tokens[this.n], 'decimal/entero/caracter/cadena/true/false/identificador');
                 return i;
                 break;
         }

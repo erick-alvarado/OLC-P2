@@ -9,6 +9,7 @@ var ast;
 function AnalizarJava(entrada) {
     let lexico = new Lexico_1.Lexico(entrada.toLowerCase());
     lexico.Analizar();
+    console.log(lexico.lista_Token);
     let sintactico = new Sintactico_1.Sintactico(lexico.lista_Token);
     sintactico.Analizar();
     ast = new AST_1.AST(sintactico.Instrucciones, lexico.lista_Error.concat(sintactico.lista_Error), lexico.lista_Token);

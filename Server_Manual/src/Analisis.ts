@@ -7,6 +7,7 @@ var ast;
 export function AnalizarJava(entrada:string):string[]{
     let lexico = new Lexico(entrada.toLowerCase());
     lexico.Analizar();
+    console.log(lexico.lista_Token)
     let sintactico = new Sintactico(lexico.lista_Token);
     sintactico.Analizar();
     ast = new AST(sintactico.Instrucciones,lexico.lista_Error.concat(sintactico.lista_Error),lexico.lista_Token);
