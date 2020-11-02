@@ -4,13 +4,18 @@ exports.miAuxiliar = exports.analizar = void 0;
 const Analisis_1 = require("./Analisis");
 exports.analizar = (req, res) => {
     //console.log("query: ",req.query.codigo)
-    let codigo = req.query.codigo;
-    //let respuesta = codigo;
-    let respuesta = Analisis_1.AnalizarJava(codigo);
-    //console.log(respuesta);
-    //console.log("params: ",req.params)
-    let a = [{ 'analisis': respuesta }, { 'grafo': 'reporteAST' }, { 'errores': 'reporteErrores' }];
-    res.send(a);
+    let codigo = req.body.codigo.toString();
+    console.log(codigo);
+    let tokens = Analisis_1.AnalizarJava(codigo);
+    let errores = Analisis_1.getListaErrores();
+    let grafo = "";
+    let traduccion = "";
+    if (errores.length == 0) {
+        grafo = Analisis_1.getGrafo();
+        traduccion = Analisis_1.getTraduccion();
+    }
+    let a = [{ 'tokens': tokens }, { 'errores': errores }, { 'grafo': grafo }, { 'traduccion': traduccion }];
+    res.send(JSON.stringify(a));
 };
 exports.miAuxiliar = (req, res) => {
     console.log("params: ", req.params);

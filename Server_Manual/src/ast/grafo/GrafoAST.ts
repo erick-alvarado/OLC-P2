@@ -7,7 +7,7 @@ export class GrafoAST{
     }
 
 
-    getGrafo():String{
+    getGrafo():string{
         let grafo = "digraph G{\n\n ";        
         grafo += "  nodo0[label=\"AST\"];\n";
         var g = new ValorGrafo(1, grafo);
@@ -15,6 +15,7 @@ export class GrafoAST{
         
         g.grafo += "\n}";
         
+        //console.log(g.grafo);
         return g.grafo;
     }
 

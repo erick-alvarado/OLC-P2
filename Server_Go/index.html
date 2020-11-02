@@ -30,6 +30,7 @@
       <button onclick="reporteErrores()" type="button" class="btn btn-secondary">Errores</button>
       <button onclick="reporteTokens()" type="button" class="btn btn-secondary">Tokens</button>
       <button onclick="reporteGrafica()" type="button" class="btn btn-secondary">Graficar</button>
+      <button onclick="reporteTraduccion()" type="button" class="btn btn-secondary">Traduccion</button>
       <button onclick="Analizar()" type="button" class="btn btn-outline-secondary">Traducir</button>
     
   </div>
@@ -39,7 +40,7 @@
     <!-- CONSOLA DE ENTRADA -->
     <br>
     <h4>Entrada:</h4>
-    <div id="Editor" style="height: 300px; white-space:pre-wrap;">
+    <div id="Editor" style="height: 400px; white-space:pre-wrap;">
         Evaluar[(5+5*5)];
         Evaluar[(2+5*10/2)];
     </div>
@@ -48,20 +49,21 @@
     <br>
     <div style="float: left;"> 
         <h4>Console JISON:</h4>
-        <div id="Console" style="height: 200px; width: 730px;"> </div>
+        <div id="Console" style="height: 200px; width: 700px;"> </div>
     </div>
     <div style="float: right;"> 
         <h4>Console MANUAL:</h4>
-        <div id="Console2" style="height: 200px; width: 730px; float: right;"> </div>
+        <div id="Console2" style="height: 200px; width: 700px; float: right;"> </div>
     </div>
     <br>
     <div style="float: left;"> 
         <h4>Grafica JISON:</h4>
-        <div id="graph1" style="width: 730px;"></div>
+        <div id="graph1" style="width: 700px;"></div>
     </div>
     <br>
     <div style="float: left;"> 
         <h4>Grafica MANUAL:</h4>
+        <div id="graph2" style="width: 700px;"></div>
     </div>
 
 

@@ -1,13 +1,13 @@
 export class ValorGrafo {
     contador:number;    
-    grafo:String;       
+    grafo:string;       
     /**
      * 
      * @param contador Contador de nodos
      * @param grafo     Cadena que contiene el dot o el grafo
      */
 
-    constructor(contador:number, grafo:String) {
+    constructor(contador:number, grafo:string) {
         this.contador = contador;
         this.grafo = grafo;
     }
@@ -16,7 +16,7 @@ export class ValorGrafo {
         return this.contador;
     }
 
-    getGrafo():String {
+    getGrafo():string {
         return this.grafo;
     }
 
@@ -24,7 +24,7 @@ export class ValorGrafo {
         this.contador = contador;
     }
 
-    setGrafo(grafo:String) {
+    setGrafo(grafo:string) {
         this.grafo = grafo;
     }
 }
