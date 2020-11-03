@@ -327,7 +327,6 @@ class Sintactico {
         switch (this.Tokens[this.n].tipo) {
             case 'pcoma':
                 i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, id, null, null, 0, 0);
-                this.n--;
                 break;
             case 'coma':
                 this.match(this.Tokens[this.n], 'coma');
@@ -338,7 +337,6 @@ class Sintactico {
                 let exp = this.E();
                 if (this.Tokens[this.n].tipo == 'pcoma') {
                     i = new Declaracion_1.Declaracion(Tipo_1.Type.COMA, id, exp, null, 0, 0);
-                    this.n--;
                 }
                 else if (this.Tokens[this.n].tipo == 'coma') {
                     this.match(this.Tokens[this.n], 'coma');
