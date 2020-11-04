@@ -9,6 +9,7 @@ export let analizar = (req:Request, res: Response) => {
     let errores = getListaErrores();
     let grafo="";
     let traduccion="";
+    console.log(errores)
     if(errores.length==0){
         grafo = getGrafo();
         traduccion= getTraduccion();

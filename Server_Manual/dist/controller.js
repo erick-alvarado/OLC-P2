@@ -10,6 +10,7 @@ exports.analizar = (req, res) => {
     let errores = Analisis_1.getListaErrores();
     let grafo = "";
     let traduccion = "";
+    console.log(errores);
     if (errores.length == 0) {
         grafo = Analisis_1.getGrafo();
         traduccion = Analisis_1.getTraduccion();

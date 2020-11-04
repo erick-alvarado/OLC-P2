@@ -346,6 +346,10 @@ export class Sintactico{
                 }
                 this.match(this.Tokens[this.n],'pcoma');
                 break;
+            default:
+                i = new Primitivo("ERROR");
+                this.match(this.Tokens[this.n],'pcoma');
+                break;
         }
         return i;
     }
@@ -576,7 +580,6 @@ export class Sintactico{
                 t= this.T();
                 ep =this.EP();
                 break;
-            
             default:
                 break;
         }

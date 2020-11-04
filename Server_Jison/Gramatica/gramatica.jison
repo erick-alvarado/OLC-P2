@@ -161,19 +161,16 @@ CLASES :
 		$$ = [$1];
 	
 	}
-	
 	;
 
-SIMBOL: pcoma
-	;
 
 
 CLASE: public_ class_ identificador BLOQUE_SENTENCIAS { $$= new Clase($3,$4, this._$.first_line, this._$.first_column); }
 	| public_ interface_ identificador BLOQUE_SENTENCIAS { $$= new Interface($3,$4, this._$.first_line, this._$.first_column); }
-	| public_ static_ void_ main_ parAbre string_ corchetes args_ parCierra BLOQUE_SENTENCIAS { $$= new Main(null,$10, this._$.first_line, this._$.first_column); }
-	| error{  
+	| public_ static_ void_ main_ parAbre string_ corchetes args_ parCierra BLOQUE_SENTENCIAS { $$= new Main(null,$10, this._$.first_line, this._$.first_column); }	
+	|  error {
 		root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));
-				
+		$$ = new ParaQueNoTruene(0,0);		
 	}
 	;
 
@@ -183,11 +180,10 @@ INSTRUCCIONES :
 		$1.push($2);
 		$$ = $1;
 	  }
+	
 	| INSTRUCCION {
 		$$ = [$1];
 	}
-	
-	
 	;
 
 
@@ -222,6 +218,7 @@ FUNCION_INTERFACE:  public_ TIPO identificador parAbre PARAMETROS parCierra pcom
 
 BLOQUE_SENTENCIAS : llaveAbre llaveCierra { $$ = new ParaQueNoTruene( this._$.first_line, this._$.first_column); } 
 	| llaveAbre INSTRUCCIONES llaveCierra { $$ = $2; }
+	
 	;
 
 	
@@ -311,6 +308,7 @@ EXPRESION :
 	| menos EXP %prec uMenos		{ $$ = new OperacionAritmetica( TypeOperation.MENOSUNARIO, $2, null, this._$.first_line, this._$.first_column); }
 	| parAbre EXPRESION parCierra	{ $$ = new OperacionAritmetica( TypeOperation.PARENTESIS, $2, null, this._$.first_line, this._$.first_column); }
 	| PRIMITIVO						{ $$ = $1; }
+	
 	;
 
 PRIMITIVOS :

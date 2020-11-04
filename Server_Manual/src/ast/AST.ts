@@ -5,7 +5,7 @@ import { Token } from "./Token";
 
 export class AST extends Instruccion {
     
-    instrucciones: Array<Instruccion>;
+    instrucciones: Array<Instruccion>=[];
     listaError: Array<Error_> ;
     listaToken: Array<Token>;
 
@@ -25,7 +25,7 @@ export class AST extends Instruccion {
     }
 
     generarGrafo(g: ValorGrafo, padre: String) {
-        //----------- LISTA DE INSTRUCCIONES -----------
+            //----------- LISTA DE INSTRUCCIONES -----------
         let nombreHijo:String = "nodo"+g.contador;
         g.grafo += "  "+nombreHijo +"[label=\"CLASES\"];\n";
         g.grafo += "  "+padre +" -> "+ nombreHijo+";\n";
@@ -40,6 +40,8 @@ export class AST extends Instruccion {
             inst.generarGrafo(g,nombreHijo);
         }
         //----------------------------------------------
+        
+        
     }
 
     getListaErrores():string[]{

@@ -317,6 +317,10 @@ class Sintactico {
                 }
                 this.match(this.Tokens[this.n], 'pcoma');
                 break;
+            default:
+                i = new Primitivo_1.Primitivo("ERROR");
+                this.match(this.Tokens[this.n], 'pcoma');
+                break;
         }
         return i;
     }

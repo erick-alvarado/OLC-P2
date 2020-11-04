@@ -5,6 +5,7 @@ const Instruccion_1 = require("./Instruccion");
 class AST extends Instruccion_1.Instruccion {
     constructor(instrucciones, errores, tokens) {
         super(0, 0);
+        this.instrucciones = [];
         this.instrucciones = instrucciones;
         this.listaError = errores;
         this.listaToken = tokens;

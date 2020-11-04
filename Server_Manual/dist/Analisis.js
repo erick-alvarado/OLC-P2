@@ -12,9 +12,9 @@ function AnalizarJava(entrada) {
     console.log(lexico.lista_Token);
     let sintactico = new Sintactico_1.Sintactico(lexico.lista_Token);
     sintactico.Analizar();
+    console.log(lexico.lista_Error);
+    console.log(sintactico.lista_Error);
     ast = new AST_1.AST(sintactico.Instrucciones, lexico.lista_Error.concat(sintactico.lista_Error), lexico.lista_Token);
-    console.log("\n\n------------------TRADUCCION----------------\n");
-    console.log(ast.translate(0));
     return ast.getListaTokens();
 }
 exports.AnalizarJava = AnalizarJava;
