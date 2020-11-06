@@ -60,7 +60,162 @@ A continuacion se definen los puertos por los cuales los servidores reciben peti
 | PAREA | [localhost:4000][PlGh] 
 | GOLANG | [localhost:8000][PlGh] 
 
+### Gramatica JISON
 
+        CLASES : CLASES CLASE 
+		        | CLASE 
+
+
+        CLASE: public_ class_ identificador BLOQUE_SENTENCIAS
+	         | public_ interface_ identificador BLOQUE_SENTENCIAS 
+	         | public_ static_ void_ main_ parAbre string_ corchetes args_ parCierra BLOQUE_SENTENCIAS 
+
+
+        INSTRUCCIONES : INSTRUCCIONES INSTRUCCION
+	                  | INSTRUCCION 
+
+
+        INSTRUCCION : DECLARACION
+	                | ASIGNACION	
+	                | INCRE_DECRE pcoma	
+	                | FUNCION_CLASE	
+	                | FUNCION_INTERFACE	
+	                | LLAMADA		
+	                | WHILE			
+	                | DO_WHILE		
+	                | FOR			
+	                | IF			
+	                | PRINT			
+	                | break_ pcoma				
+	                | continue_ pcoma			
+	                | return_ EXPRESION pcoma	
+
+        INCRE_DECRE: identificador mas_mas 			
+	               | identificador menos_menos  		
+
+        FUNCION_CLASE:  public_ TIPO identificador parAbre PARAMETROS parCierra BLOQUE_SENTENCIAS 
+	                 | public_ void_ identificador parAbre PARAMETROS parCierra BLOQUE_SENTENCIAS 
+
+
+        FUNCION_INTERFACE:  public_ TIPO identificador parAbre PARAMETROS parCierra pcoma
+	                     | public_ void_ identificador parAbre PARAMETROS parCierra pcoma 
+
+        BLOQUE_SENTENCIAS : llaveAbre llaveCierra 
+	                      | llaveAbre INSTRUCCIONES llaveCierra 
+	
+        PARAMETROS : PARAMETROS coma PARAMETRO
+	               | PARAMETRO 
+
+        PARAMETRO : TIPO identificador
+
+        DECLARACION : TIPO identificador pcoma 
+			        | TIPO identificador coma DECLARA pcoma 
+			        | TIPO identificador igual EXPRESION pcoma 
+			        | TIPO identificador igual EXPRESION coma DECLARA pcoma 
+
+        DECLARA:  identificador igual EXPRESION  		
+	           | identificador igual EXPRESION coma DECLARA 
+	           | identificador coma DECLARA	 			
+	           | identificador 	 						 
+	
+
+        LLAMADA : identificador parAbre PRIMITIVOS parCierra pcoma
+
+        TIPO : numeric_ 
+	         | string_ 	
+	         | boolean_	
+	         | double_ 	
+	         | char_ 	
+
+        ASIGNACION : identificador igual EXPRESION pcoma 
+
+        WHILE : while_ parAbre EXPRESION parCierra BLOQUE_SENTENCIAS
+
+        DO_WHILE : do_ BLOQUE_SENTENCIAS while_ parAbre EXPRESION parCierra pcoma 
+
+        FOR: for_ parAbre DECLARACION  EXPRESION pcoma EXPRESION parCierra BLOQUE_SENTENCIAS
+
+
+        IF: if_ parAbre EXPRESION parCierra BLOQUE_SENTENCIAS ELSE 
+	      | if_ parAbre EXPRESION parCierra BLOQUE_SENTENCIAS
+	
+        ELSE: else_ BLOQUE_SENTENCIAS 
+	        | else_ IF 				  
+
+        PRINT : system_ punto out_ punto print_ parAbre EXPRESION parCierra pcoma 
+	        | system_ punto out_ punto println_ parAbre EXPRESION parCierra pcoma
+
+        EXPRESION : EXPRESION mas EXPRESION		
+	              | EXPRESION menos EXPRESION		
+	              | EXPRESION por EXPRESION		
+	              | EXPRESION division EXPRESION	
+	              | INCRE_DECRE					
+	
+	              | EXPRESION mayorQ_igual EXPRESION	
+	              | EXPRESION mayorQ EXPRESION	
+	              | EXPRESION menorQ_igual EXPRESION	
+	              | EXPRESION menorQ EXPRESION	
+	              | EXPRESION igual_igual EXPRESION	
+	              | distinto EXPRESION	
+	
+	              | EXPRESION or_ EXPRESION		
+	              | EXPRESION and_ EXPRESION		
+	              | EXPRESION xor_ EXPRESION		
+	              | not_ EXPRESION				
+	              | menos EXP %prec uMenos		
+	              | parAbre EXPRESION parCierra	
+	              | PRIMITIVO						
+	
+
+        PRIMITIVOS : PRIMITIVOS coma PRIMITIVO 
+	               | PRIMITIVO
+
+        PRIMITIVO : decimal		
+	              | entero		
+	              |  caracter		
+	              | cadena		
+	              | true_			
+	              | false_		
+	              | identificador 
+	
+
+### Gramatica PAREA
+
+En el metodo de parea se utilizo la misma gramatica utilizada en JISON, las unicas modificaciones pertinentes se realizaron en las listas, cambiando la recursividad de la izquierda como en el siguiente ejemplo.
+        
+        CLASES : CLASES CLASE 
+		        | CLASE 
+La gramatica anterior se modifico y se utilizo como:
+        
+        CLASES : CLASE CLASES  
+		        | CLASE 
+
+Para llevar a cabo dicha accion, se utilizo 1 token de reconocimiento previo. Asimismo las expresiones necesitaron un cambio, removiendo la recursividad por la izquierda y ambiguedades que existiesen en esta, por lo que la gramatica de expresiones se utilizo de la siguiente manera:
+
+        E : T EP  
+        
+		EP : + T EP
+		   | - T EP
+		   | > T EP
+		   | < T EP
+		   | >= T EP
+		   | <= T EP
+		   | == T EP
+		   | != T EP
+		   | || T EP
+		   | && T EP
+		   | ^ T EP
+		   | e
+		   
+		T:  F TP
+		TP : * F TP
+		   | / F EP
+		   | e
+        
+        F : (E)
+          | -E
+          | ! E
+          | PRIMITVO
 License
 ----
 
