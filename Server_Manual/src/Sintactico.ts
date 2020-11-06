@@ -36,12 +36,15 @@ export class Sintactico{
     Instrucciones : Array<Instruccion>=[];
 
 
-    
     constructor(tokens: Array<Token>){
-        this.Tokens=tokens;
+        this.Tokens=tokens;     
     }
     Analizar() {
+        this.Tokens.push(new Token(0,0,"$","$"));
         while(this.Tokens[this.n]!=null){
+            if(this.Tokens[this.n].tipo=="$"){
+                break;
+            }
             if(this.Tokens[this.n].tipo=='public_'){
                 this.match(this.Tokens[this.n],'public_');
                 switch(this.Tokens[this.n].tipo){
@@ -637,11 +640,6 @@ export class Sintactico{
 
 
 
-
-
-
-
-
     /*
 
     Expresion2(): Instruccion{
@@ -740,12 +738,17 @@ export class Sintactico{
     }
         */
     match(token: Token,esperado: string ){
-        if(token.tipo==esperado){
-        }
-        else{
-            this.lista_Error.push(new Error_("SINTACTICO",this.Tokens[this.n].fila,this.Tokens[this.n].columna,this.Tokens[this.n].descripcion+" se esperaba:"+esperado));
-        }
-        this.n++;
-
+            if(token.tipo==esperado){
+            }
+            else{
+                if(token.tipo=="$"){
+                    this.lista_Error.push(new Error_("SINTACTICO",0,0,"se esperaba:"+esperado));
+                    this.Tokens.push(new Token(0,0,"$","$"));
+                }
+                else{
+                    this.lista_Error.push(new Error_("SINTACTICO",this.Tokens[this.n].fila,this.Tokens[this.n].columna,this.Tokens[this.n].descripcion+" se esperaba:"+esperado));
+                }
+            }
+            this.n++;
     }
 }

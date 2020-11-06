@@ -17,8 +17,10 @@ type codigo struct {
 }
 
 func getTraduccion(w http.ResponseWriter, r *http.Request) {
-	var url = "http://localhost:3000/analisis/"
-	var url2 = "http://localhost:4000/analisis/"
+	//JISON
+	var url = "http://172.17.0.3:3000/analisis/"
+	//MANUAL
+	var url2 = "http://172.17.0.2:4000/analisis/"
 
 	var decoder = json.NewDecoder(r.Body)
 	var c codigo

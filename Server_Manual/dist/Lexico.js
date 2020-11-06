@@ -5,7 +5,7 @@ const Token_1 = require("./ast/Token");
 const Error_1 = require("./ast/Error_");
 class Lexico {
     constructor(texto) {
-        this.fila = 0;
+        this.fila = 1;
         this.columna = 0;
         this.cadena = "";
         this.lista_Token = [];
@@ -72,6 +72,7 @@ class Lexico {
             this.char = this.texto[n];
             switch (this.char) {
                 case ' ':
+                    this.columna++;
                     break;
                 case '\n':
                     this.columna = 0;
@@ -133,6 +134,7 @@ class Lexico {
                                     break;
                                 }
                             }
+                            this.fila++;
                             this.columna = 0;
                             break;
                         case '*':
@@ -144,6 +146,9 @@ class Lexico {
                                 n++;
                                 this.columna++;
                                 this.char = this.texto[n];
+                                if (this.char == '\n') {
+                                    this.fila++;
+                                }
                                 if (this.char == '*' && this.texto[n + 1] == '/') {
                                     n++;
                                     this.columna++;
@@ -367,10 +372,10 @@ class Lexico {
     }
     guardar() {
         if (this.dict[this.cadena] != undefined) {
-            this.lista_Token.push(new Token_1.Token(this.fila, this.columna, this.dict[this.cadena], this.cadena));
+            this.lista_Token.push(new Token_1.Token(this.fila, this.columna - this.cadena.length, this.dict[this.cadena], this.cadena));
         }
         else {
-            this.lista_Error.push(new Error_1.Error_("LEXICO", this.fila, this.columna, this.cadena));
+            this.lista_Error.push(new Error_1.Error_("LEXICO", this.fila, this.columna - this.cadena.length, this.cadena));
         }
         this.cadena = "";
     }

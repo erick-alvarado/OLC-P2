@@ -114,8 +114,7 @@ case 6:
 break;
 case 7:
 
-		root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));
-		this.$ = new ParaQueNoTruene(0,0);		
+		root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));	
 	
 break;
 case 9: case 33: case 78:

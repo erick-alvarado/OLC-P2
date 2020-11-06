@@ -22,7 +22,7 @@ export class Parametro extends Instruccion {
 
     translate() {
         // int a = 0;
-        return "var "+ this.id;
+        return  this.id;
     }
     generarGrafo(g: ValorGrafo, padre: String) {
         let padreAux = padre; //Auxiar con nombre del padre

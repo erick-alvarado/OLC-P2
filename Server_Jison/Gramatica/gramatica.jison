@@ -164,13 +164,11 @@ CLASES :
 	;
 
 
-
 CLASE: public_ class_ identificador BLOQUE_SENTENCIAS { $$= new Clase($3,$4, this._$.first_line, this._$.first_column); }
 	| public_ interface_ identificador BLOQUE_SENTENCIAS { $$= new Interface($3,$4, this._$.first_line, this._$.first_column); }
-	| public_ static_ void_ main_ parAbre string_ corchetes args_ parCierra BLOQUE_SENTENCIAS { $$= new Main(null,$10, this._$.first_line, this._$.first_column); }	
-	|  error {
-		root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));
-		$$ = new ParaQueNoTruene(0,0);		
+	| public_ static_ void_ main_ parAbre string_ corchetes args_ parCierra BLOQUE_SENTENCIAS { $$= new Main(null,$10, this._$.first_line, this._$.first_column); }	  
+	| error{
+		root.addError(new Error_("SINTACTICO",this._$.first_line, this._$.first_column, yytext));	
 	}
 	;
 
@@ -202,7 +200,6 @@ INSTRUCCION :
 	| break_ pcoma				{ $$= new Sentencia($1, null,this._$.first_line, this._$.first_column); }
 	| continue_ pcoma			{ $$= new Sentencia($1, null,this._$.first_line, this._$.first_column); }
 	| return_ EXPRESION pcoma	{ $$= new Sentencia($1, $2,this._$.first_line, this._$.first_column); }
-	
 	;
 
 INCRE_DECRE: identificador mas_mas 			{ $$ = new Incre_Decre( $1,TypeOperation.ADICION,  this._$.first_line, this._$.first_column); }
@@ -218,7 +215,6 @@ FUNCION_INTERFACE:  public_ TIPO identificador parAbre PARAMETROS parCierra pcom
 
 BLOQUE_SENTENCIAS : llaveAbre llaveCierra { $$ = new ParaQueNoTruene( this._$.first_line, this._$.first_column); } 
 	| llaveAbre INSTRUCCIONES llaveCierra { $$ = $2; }
-	
 	;
 
 	

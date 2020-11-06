@@ -18,7 +18,7 @@ class Parametro extends Instruccion_1.Instruccion {
     }
     translate() {
         // int a = 0;
-        return "var " + this.id;
+        return this.id;
     }
     generarGrafo(g, padre) {
         let padreAux = padre; //Auxiar con nombre del padre

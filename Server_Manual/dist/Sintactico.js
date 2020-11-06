@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sintactico = void 0;
+const Token_1 = require("./ast/Token");
 const Error_1 = require("./ast/Error_");
 const Asignacion_1 = require("../dist/ast/instrucciones/Asignacion");
 const Sentencia_1 = require("../dist/ast/instrucciones/Sentencia");
@@ -32,7 +33,11 @@ class Sintactico {
         this.Tokens = tokens;
     }
     Analizar() {
+        this.Tokens.push(new Token_1.Token(0, 0, "$", "$"));
         while (this.Tokens[this.n] != null) {
+            if (this.Tokens[this.n].tipo == "$") {
+                break;
+            }
             if (this.Tokens[this.n].tipo == 'public_') {
                 this.match(this.Tokens[this.n], 'public_');
                 switch (this.Tokens[this.n].tipo) {
@@ -703,7 +708,13 @@ class Sintactico {
         if (token.tipo == esperado) {
         }
         else {
-            this.lista_Error.push(new Error_1.Error_("SINTACTICO", this.Tokens[this.n].fila, this.Tokens[this.n].columna, this.Tokens[this.n].descripcion + " se esperaba:" + esperado));
+            if (token.tipo == "$") {
+                this.lista_Error.push(new Error_1.Error_("SINTACTICO", 0, 0, "se esperaba:" + esperado));
+                this.Tokens.push(new Token_1.Token(0, 0, "$", "$"));
+            }
+            else {
+                this.lista_Error.push(new Error_1.Error_("SINTACTICO", this.Tokens[this.n].fila, this.Tokens[this.n].columna, this.Tokens[this.n].descripcion + " se esperaba:" + esperado));
+            }
         }
         this.n++;
     }

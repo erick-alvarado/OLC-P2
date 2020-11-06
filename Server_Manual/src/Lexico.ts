@@ -2,7 +2,7 @@ import { Token } from "./ast/Token";
 import { Error_ } from "./ast/Error_";
 import { StringLiteral } from "typescript";
 export class Lexico{
-    fila: number=0;
+    fila: number=1;
     columna: number=0;
     char: string;
     cadena:string = "";
@@ -91,6 +91,7 @@ export class Lexico{
            
             switch(this.char){
                 case ' ':
+                    this.columna++;
                     break;
                 case '\n':
                     this.columna=0;
@@ -152,6 +153,7 @@ export class Lexico{
                                 }
                                 
                             }
+                            this.fila++;
                             this.columna=0;
                             break;
                         case '*':
@@ -163,6 +165,9 @@ export class Lexico{
                                 n++;
                                 this.columna++;
                                 this.char = this.texto[n];
+                                if(this.char=='\n'){
+                                    this.fila++;
+                                }
                                 if(this.char=='*'&& this.texto[n+1]=='/'){
                                     n++;
                                     this.columna++;
@@ -382,10 +387,10 @@ export class Lexico{
 
     guardar(){
             if(this.dict[this.cadena] != undefined){
-                this.lista_Token.push(new Token(this.fila,this.columna,this.dict[this.cadena],this.cadena));
+                this.lista_Token.push(new Token(this.fila,this.columna-this.cadena.length,this.dict[this.cadena],this.cadena));
             }
             else{
-                this.lista_Error.push(new Error_("LEXICO",this.fila,this.columna,this.cadena));
+                this.lista_Error.push(new Error_("LEXICO",this.fila,this.columna-this.cadena.length,this.cadena));
             }
             this.cadena="";
         

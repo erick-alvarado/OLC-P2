@@ -193,7 +193,12 @@ function view(response){
     let errcons2="";
     Err.forEach(error => errcons+= error.tipo+" fila:"+error.fila+" columna:"+error.columna+" descripcion:"+error.descripcion+"\n");    
     Err2.forEach(error => errcons2+= error.tipo+" fila:"+error.fila+" columna:"+error.columna+" descripcion:"+error.descripcion+"\n");    
-    
+    if(errcons==""){
+      errcons=traduccion1
+    }
+    if(errcons2==""){
+      errcons2=traduccion2
+    }
     let con = ace.edit("Console"); 
     con.setValue(errcons);
 
