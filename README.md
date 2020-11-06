@@ -62,6 +62,10 @@ A continuacion se definen los puertos por los cuales los servidores reciben peti
 
 ### Gramatica JISON
 
+Esta gramatica es aplicable a cualquier analizador de tipo ascendente, y es necesario asignar la precedencia de operadores en la herramienta.
+
+
+
         CLASES : CLASES CLASE 
 		        | CLASE 
 
@@ -181,7 +185,7 @@ A continuacion se definen los puertos por los cuales los servidores reciben peti
 
 ### Gramatica PAREA
 
-En el metodo de parea se utilizo la misma gramatica utilizada en JISON, las unicas modificaciones pertinentes se realizaron en las listas, cambiando la recursividad de la izquierda como en el siguiente ejemplo.
+En el metodo de parea se utilizo la misma gramatica utilizada en JISON, las unicas modificaciones pertinentes se realizaron en las listas, cambiando la recursividad de la izquierda como en el siguiente ejemplo. Cabe recalcar que dicha gramatica es aplicable a los analizadores descendentes unicamente.
         
         CLASES : CLASES CLASE 
 		        | CLASE 
