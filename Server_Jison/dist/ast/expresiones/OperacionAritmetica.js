@@ -69,6 +69,9 @@ class OperacionAritmetica extends Instruccion_1.Instruccion {
             case Tipo_1.TypeOperation.PARENTESIS: {
                 return "PARENTESIS";
             }
+            case Tipo_1.TypeOperation.MENOSUNARIO: {
+                return "MENOS_UNARIO";
+            }
             default: {
                 return "MENOS_UNARIO";
             }

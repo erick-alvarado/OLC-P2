@@ -98,6 +98,7 @@ class Sintactico {
                             instrucciones.push(this.Llamada());
                             break;
                         default:
+                            this.match(this.Tokens[this.n], 'identificador');
                             this.match(this.Tokens[this.n], 'mas_mas/menos_menos/igual/parAbre');
                             break;
                     }

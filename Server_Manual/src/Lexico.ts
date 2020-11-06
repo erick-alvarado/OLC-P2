@@ -162,12 +162,12 @@ export class Lexico{
                             this.columna++;
                             this.char = this.texto[n];
                             while(true){
-                                n++;
-                                this.columna++;
-                                this.char = this.texto[n];
                                 if(this.char=='\n'){
                                     this.fila++;
                                 }
+                                n++;
+                                this.columna++;
+                                this.char = this.texto[n];
                                 if(this.char=='*'&& this.texto[n+1]=='/'){
                                     n++;
                                     this.columna++;

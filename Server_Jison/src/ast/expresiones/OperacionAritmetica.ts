@@ -66,6 +66,7 @@ export class OperacionAritmetica extends Instruccion {
             case TypeOperation.MULTIPLICACION: { return "MULTIPLICACION"; }
             case TypeOperation.DIVISION: { return "DIVISION"; }
             case TypeOperation.PARENTESIS: { return "PARENTESIS"; }
+            case TypeOperation.MENOSUNARIO:{ return "MENOS_UNARIO"; }
             default:{ return "MENOS_UNARIO"; }
         }
     }

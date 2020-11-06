@@ -146,6 +146,9 @@ class Expresion extends Instruccion_1.Instruccion {
             case Tipo_1.TypeOperation.DIVISION: {
                 return "DIVISION";
             }
+            case Tipo_1.TypeOperation.MENOSUNARIO: {
+                return "MENOS_UNARIO";
+            }
             case Tipo_1.TypeOperation.PARENTESIS: {
                 return "PARENTESIS";
             }

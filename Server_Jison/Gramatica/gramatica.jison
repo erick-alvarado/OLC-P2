@@ -138,7 +138,7 @@
 %left 'por' 'division'
 
 
-%left uMenos
+%left menos
 %right 'not_' 
 %right 'mas_mas' 'menos_menos'
 
@@ -294,14 +294,14 @@ EXPRESION :
 	| EXPRESION menorQ_igual EXPRESION	{ $$ = new OperacionRelacional( TypeOperation.MENOR_IGUAL, $1, $3, this._$.first_line, this._$.first_column); }
 	| EXPRESION menorQ EXPRESION	{ $$ = new OperacionRelacional( TypeOperation.MENOR, $1, $3, this._$.first_line, this._$.first_column); }
 	| EXPRESION igual_igual EXPRESION	{ $$ = new OperacionRelacional( TypeOperation.IGUAL_IGUAL, $1, $3, this._$.first_line, this._$.first_column); }
-	| distinto EXPRESION	{ $$ = new OperacionRelacional( TypeOperation.DISTINTO, $2, null, this._$.first_line, this._$.first_column); }
+	| EXPRESION distinto EXPRESION	{ $$ = new OperacionRelacional( TypeOperation.DISTINTO, $1, $3, this._$.first_line, this._$.first_column); }
 	
 	// Logicas
 	| EXPRESION or_ EXPRESION		{ $$ = new OperacionLogica( TypeOperation.OR, $1, $3, this._$.first_line, this._$.first_column); }
 	| EXPRESION and_ EXPRESION		{ $$ = new OperacionLogica( TypeOperation.AND, $1, $3, this._$.first_line, this._$.first_column); }
 	| EXPRESION xor_ EXPRESION		{ $$ = new OperacionLogica( TypeOperation.XOR, $1, $3, this._$.first_line, this._$.first_column); }
 	| not_ EXPRESION				{ $$ = new OperacionLogica( TypeOperation.NOT, $2, null, this._$.first_line, this._$.first_column); }
-	| menos EXP %prec uMenos		{ $$ = new OperacionAritmetica( TypeOperation.MENOSUNARIO, $2, null, this._$.first_line, this._$.first_column); }
+	| menos EXPRESION 					{ $$ = new OperacionAritmetica( TypeOperation.MENOSUNARIO, $2, null, this._$.first_line, this._$.first_column); }
 	| parAbre EXPRESION parCierra	{ $$ = new OperacionAritmetica( TypeOperation.PARENTESIS, $2, null, this._$.first_line, this._$.first_column); }
 	| PRIMITIVO						{ $$ = $1; }
 	

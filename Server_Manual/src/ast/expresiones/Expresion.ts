@@ -127,6 +127,7 @@ export class Expresion extends Instruccion {
             case TypeOperation.RESTA: { return "RESTA"; }
             case TypeOperation.MULTIPLICACION: { return "MULTIPLICACION"; }
             case TypeOperation.DIVISION: { return "DIVISION"; }
+            case TypeOperation.MENOSUNARIO: { return "MENOS_UNARIO"; }
             case TypeOperation.PARENTESIS: { return "PARENTESIS"; }
             case TypeOperation.E: { return "EXPRESION"; }
             case TypeOperation.EP: { return "EP"; }
