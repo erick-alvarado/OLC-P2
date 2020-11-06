@@ -198,6 +198,7 @@ Para llevar a cabo dicha accion, se utilizo 1 token de reconocimiento previo. As
 
         E : T EP  
         
+		
 		EP : + T EP
 		   | - T EP
 		   | > T EP
@@ -211,10 +212,14 @@ Para llevar a cabo dicha accion, se utilizo 1 token de reconocimiento previo. As
 		   | ^ T EP
 		   | e
 		   
+		
 		T:  F TP
+		
+		
 		TP : * F TP
 		   | / F EP
 		   | e
+        
         
         F : (E)
           | -E
